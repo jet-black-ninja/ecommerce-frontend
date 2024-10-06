@@ -15,15 +15,15 @@ import commonFeatureSlice from './common-slice';
 const store =configureStore ({
     reducer:{
         auth: authReducer,
-        adminProduct: adminProductSlice,
-        adminOrder: adminOrderSlice,
-        shopProduct: shopProductSlice,
-        shopCart: shopCartSlice,
-        shopAddress: shopAddressSlice,
-        shopOrder: shopOrderSlice,
-        shopSearch: shopSearchSlice,
-        shopReview: shopReviewSlice,
-        common: commonFeatureSlice,
+        // adminProduct: adminProductSlice,
+        // adminOrder: adminOrderSlice,
+        // shopProduct: shopProductSlice,
+        // shopCart: shopCartSlice,
+        // shopAddress: shopAddressSlice,
+        // shopOrder: shopOrderSlice,
+        // shopSearch: shopSearchSlice,
+        // shopReview: shopReviewSlice,
+        // common: commonFeatureSlice,
     },
 });
  

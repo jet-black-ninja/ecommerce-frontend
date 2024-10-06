@@ -6,13 +6,12 @@ const initialState ={
     isLoading: false,
     user: null,
 }
-const SERVER_URL = import.meta.env.SERVER_URL;
-
+const serverURL = import.meta.env.VITE_SERVER_URL ||  'http://localhost:5000' ;
 export const registerUser = createAsyncThunk(
     'auth/register',
     async (formData) => {
         const response = await axios.post(
-            `${SERVER_URL}/api/auth/register`,
+            `${serverURL}/api/auth/register`,
             formData,
             {
                 withCredentials: true,
@@ -26,7 +25,7 @@ export const loginUser = createAsyncThunk(
     'auth/login',
     async (formData) => {
         const response = await axios.post(
-            `${SERVER_URL}/api/auth/login`,
+            `${serverURL}/api/auth/login`,
             formData,
             {
                 withCredentials: true,
@@ -40,7 +39,7 @@ export const logoutUser = createAsyncThunk(
     'auth/logout',
     async () => {
         const response = await axios.post(
-            `${SERVER_URL}/api/auth/logout`,
+            `${serverURL}/api/auth/logout`,
             {},
             {
                 withCredentials: true,
@@ -50,11 +49,11 @@ export const logoutUser = createAsyncThunk(
     }
 )
 
-export const checkAuth = createAsyncThunk (
+export const CheckAuth = createAsyncThunk (
     'auth/checkAuth',
     async () => {
         const response = await axios.get(
-            `${SERVER_URL}/api/auth/check-auth`,
+            `${serverURL}/api/auth/check-auth`,
             {
                 withCredentials: true,
                 headers:{
@@ -102,15 +101,15 @@ const authSlice = createSlice({
             state.user = null;
             state.isAuthenticated = false;
         })
-        .addCase(checkAuth.pending, (state) => {
+        .addCase(CheckAuth.pending, (state) => {
             state.isLoading = true;
         })
-        .addCase(checkAuth.fulfilled , (state,action) => {
+        .addCase(CheckAuth.fulfilled , (state,action) => {
             state.isLoading = false;
             state.user = action.payload.success? action.payload.user : null;
             state.isAuthenticated = action.payload.success;
         })
-        .addCase(checkAuth.rejected, (state) => {
+        .addCase(CheckAuth.rejected, (state) => {
             state.isLoading = false;
             state.user = null;
             state.isAuthenticated = false;
