@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom"
 import AuthLayout from "./components/auth/layout"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
-import { CheckAuth } from "./store/auth-slice";
+import { checkAuth } from "./store/auth-slice";
 import { Skeleton } from "./components/ui/skeleton";
 import  AuthRegister  from "./pages/auth/register"
 import  AuthLogin  from './pages/auth/login';
@@ -13,7 +13,11 @@ import AdminProducts from "./pages/admin-view/Products";
 import ShoppingLayout from './components/shop-view/layout';
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import NotAuthPage from "./pages/not-auth/NotAuthPage";
-
+import CheckAuth from "@/components/common/check-auth";
+import Homepage from "./pages/shopping-view/shopHome";
+import ListingPage from "./pages/shopping-view/listing";
+import CheckoutPage from "./pages/shopping-view/checkout";
+import AccountPage from "./pages/shopping-view/account";
 function App() {
   const {user,isAuthenticated, isLoading} = useSelector(
     (state)=> state.auth
@@ -21,7 +25,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(CheckAuth());
+    dispatch(checkAuth());
   },[dispatch]);
   if(isLoading) return <Skeleton className="w-[800] bg-black h-[600]"/>;
   // console.log(isLoading, user);
@@ -33,12 +37,12 @@ function App() {
         element={
           <CheckAuth 
           isAuthenticated={isAuthenticated} 
-          user={user}></CheckAuth>
+          user={user}> </CheckAuth>
           }
         />
         <Route path ="/auth" element={<AuthLayout />} >
           <Route path = "register" element ={<AuthRegister/>}/>
-          <Route path = 'login' element = {<AuthLogin/>}/>
+          <Route path = "login" element = {<AuthLogin/>}/>
         </Route>
 
         <Route path = "/admin" element={<AdminLayout />}>
@@ -48,9 +52,12 @@ function App() {
         </Route>
 
         <Route path = "/shop" element ={<ShoppingLayout/>}>
-          <Route path = "" />
+          <Route path = "home" element={<Homepage />} />
+          <Route path ="listing" element = {<ListingPage />} />
+          <Route path = "checkout"  element= {<CheckoutPage />} />
+          <Route path= "account" element={<AccountPage />} />
         </Route>
-        <Route path ="/unauth" element ={<NotAuthPage />}/>
+        <Route path ="/unauth-page" element ={<NotAuthPage />}/>
         <Route path="/*" element={<NotFoundPage/>} />
       </Routes>
     </div>

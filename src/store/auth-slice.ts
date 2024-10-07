@@ -49,7 +49,7 @@ export const logoutUser = createAsyncThunk(
     }
 )
 
-export const CheckAuth = createAsyncThunk (
+export const checkAuth = createAsyncThunk (
     'auth/checkAuth',
     async () => {
         const response = await axios.get(
@@ -101,15 +101,15 @@ const authSlice = createSlice({
             state.user = null;
             state.isAuthenticated = false;
         })
-        .addCase(CheckAuth.pending, (state) => {
+        .addCase(checkAuth.pending, (state) => {
             state.isLoading = true;
         })
-        .addCase(CheckAuth.fulfilled , (state,action) => {
+        .addCase(checkAuth.fulfilled , (state,action) => {
             state.isLoading = false;
             state.user = action.payload.success? action.payload.user : null;
             state.isAuthenticated = action.payload.success;
         })
-        .addCase(CheckAuth.rejected, (state) => {
+        .addCase(checkAuth.rejected, (state) => {
             state.isLoading = false;
             state.user = null;
             state.isAuthenticated = false;
