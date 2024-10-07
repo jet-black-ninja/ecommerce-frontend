@@ -5,30 +5,48 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "@/store/auth-slice";
 import { Link } from "react-router-dom";
 import CommonForm from "@/components/common/form";
-const initialData={
+import { AppDispatch } from "@/store/store";
+
+interface FormData{
+    email: string;
+    password:string;
+}
+interface LoginResponse {
+    payload: {
+      success: boolean;
+      message: string;
+    };
+  }
+const initialData:FormData={
     email:"",
     password:"",
 }
 
 function AuthLogin() {
     const [formData, setFormData] = useState(initialData);
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const{toast} = useToast();
-    function handleSubmit(event:FormEvent<HTMLFormElement>){
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        dispatch(loginUser(formData)).then((data) => {
-            if(data?.payload?.success){
-                toast({
-                    title:data?.payload?.message,
-                })
-            } else {
-                toast({
-                    title: data?.payload?.message,
-                    variant: "destructive",
-                });
-            }
-        });
-    }
+        try {
+          const data = await dispatch(loginUser(formData)) as LoginResponse;
+          if (data?.payload?.success) {
+            toast({
+              title: data?.payload?.message,
+            });
+          } else {
+            toast({
+              title: data?.payload?.message,
+              variant: "destructive",
+            });
+          }
+        } catch (error) {
+          toast({
+            title: `An error occurred during login. ${error}`,
+            variant: "destructive",
+          });
+        }
+      };
     
   return (
     <div className="mx-auto w-full max-w-md space-y-6">

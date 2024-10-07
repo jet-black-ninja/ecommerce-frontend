@@ -23,8 +23,12 @@ const store =configureStore ({
         // shopOrder: shopOrderSlice,
         // shopSearch: shopSearchSlice,
         // shopReview: shopReviewSlice,
-        // common: commonFeatureSlice,
+        common: commonFeatureSlice,
     },
 });
- 
+ // Define RootState type based on the store's reducer
+export type RootState = ReturnType<typeof store.getState>;
+// Define AppDispatch type
+export type AppDispatch = typeof store.dispatch;
+
 export default store;

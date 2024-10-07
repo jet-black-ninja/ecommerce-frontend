@@ -1,16 +1,38 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice ,PayloadAction} from "@reduxjs/toolkit";
 import axios from 'axios'
 
-const initialState ={
+interface User{
+    id:string;
+    userName: string;
+    email: string;
+    role?:string;
+}
+interface AuthState{
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    user: User | null | undefined;
+}
+interface AuthResponse{
+    success: boolean;
+    message:string;
+    user?:User;
+}
+interface LoginResponse{
+    success:boolean;
+    message: string;
+
+}
+const initialState:AuthState ={
     isAuthenticated: false,
     isLoading: false,
     user: null,
 }
+
 const serverURL = import.meta.env.VITE_SERVER_URL ||  'http://localhost:5000' ;
 export const registerUser = createAsyncThunk(
     'auth/register',
-    async (formData) => {
-        const response = await axios.post(
+    async (formData:{username:string, email:string, password: string }) => {
+        const response = await axios.post<AuthResponse>(
             `${serverURL}/api/auth/register`,
             formData,
             {
@@ -23,22 +45,22 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     'auth/login',
-    async (formData) => {
-        const response = await axios.post(
+    async (formData:{email:string, password:string}) => {
+        const response = await axios.post<AuthResponse>(
             `${serverURL}/api/auth/login`,
             formData,
             {
                 withCredentials: true,
             }
         );
-        return response.data;
+        return response.data as LoginResponse;
     }
 )
 
 export const logoutUser = createAsyncThunk(
     'auth/logout',
     async () => {
-        const response = await axios.post(
+        const response = await axios.post<{success:boolean}>(
             `${serverURL}/api/auth/logout`,
             {},
             {
@@ -52,13 +74,12 @@ export const logoutUser = createAsyncThunk(
 export const checkAuth = createAsyncThunk (
     'auth/checkAuth',
     async () => {
-        const response = await axios.get(
+        const response = await axios.get<AuthResponse>(
             `${serverURL}/api/auth/check-auth`,
             {
                 withCredentials: true,
                 headers:{
-                    "Cache-Control":
-                    "no-store, no-cache, must-revalidate, proxy-revalidate"
+                    "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate"
                 },
             }
         );
@@ -89,7 +110,7 @@ const authSlice = createSlice({
         .addCase(loginUser.pending, (state)=> {
             state.isLoading = true;
         })
-        .addCase(loginUser.fulfilled , (state, action) => {
+        .addCase(loginUser.fulfilled , (state, action:PayloadAction<AuthResponse>) => {
             console.log(action);
 
             state.isLoading = false;
@@ -104,7 +125,7 @@ const authSlice = createSlice({
         .addCase(checkAuth.pending, (state) => {
             state.isLoading = true;
         })
-        .addCase(checkAuth.fulfilled , (state,action) => {
+        .addCase(checkAuth.fulfilled , (state,action:PayloadAction<AuthResponse>) => {
             state.isLoading = false;
             state.user = action.payload.success? action.payload.user : null;
             state.isAuthenticated = action.payload.success;

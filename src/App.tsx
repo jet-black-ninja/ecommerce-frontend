@@ -18,11 +18,12 @@ import Homepage from "./pages/shopping-view/shopHome";
 import ListingPage from "./pages/shopping-view/listing";
 import CheckoutPage from "./pages/shopping-view/checkout";
 import AccountPage from "./pages/shopping-view/account";
+import { RootState, AppDispatch} from "./store/store";
 function App() {
   const {user,isAuthenticated, isLoading} = useSelector(
-    (state)=> state.auth
+    (state:RootState)=> state.auth
   );
-  const dispatch = useDispatch();
+  const dispatch= useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -40,18 +41,24 @@ function App() {
           user={user}> </CheckAuth>
           }
         />
-        <Route path ="/auth" element={<AuthLayout />} >
+        <Route path ="/auth" element={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AuthLayout />
+            </CheckAuth>} >
           <Route path = "register" element ={<AuthRegister/>}/>
           <Route path = "login" element = {<AuthLogin/>}/>
         </Route>
-
+        {/* <Route path = "/admin" element={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <AdminLayout />
+            </CheckAuth>}> */}
         <Route path = "/admin" element={<AdminLayout />}>
           <Route path = "dashboard" element={<AdminDashboard/>}/>
           <Route path = "orders" element ={<AdminOrders/>} />
           <Route path = "products" element = {<AdminProducts/>} />
         </Route>
 
-        <Route path = "/shop" element ={<ShoppingLayout/>}>
+        <Route path = "/shop" element ={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <ShoppingLayout />
+            </CheckAuth>}>
           <Route path = "home" element={<Homepage />} />
           <Route path ="listing" element = {<ListingPage />} />
           <Route path = "checkout"  element= {<CheckoutPage />} />
