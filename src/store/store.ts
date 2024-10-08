@@ -1,5 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit';
+
 import authReducer from './auth-slice';
+
 import adminProductSlice from './admin/products-slice';
 import adminOrderSlice from './admin/order-slice';
 
@@ -15,8 +17,8 @@ import commonFeatureSlice from './common-slice';
 const store =configureStore ({
     reducer:{
         auth: authReducer,
-        // adminProduct: adminProductSlice,
-        // adminOrder: adminOrderSlice,
+        adminProduct: adminProductSlice,
+        adminOrder: adminOrderSlice,
         // shopProduct: shopProductSlice,
         // shopCart: shopCartSlice,
         // shopAddress: shopAddressSlice,
