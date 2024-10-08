@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {AppDispatch, RootState} from "@/store/store";
 function AdminDashboard() {
   const [imageFile, setImageFile] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
-  const [imageLoadingState, setImageLoadingState] = useState(false);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
+  const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const { featureImageList } = useSelector((state:RootState) => state.common);
 
@@ -39,6 +39,7 @@ function AdminDashboard() {
         setImageLoadingState={setImageLoadingState}
         imageLoadingState={imageLoadingState}
         isCustomStyling={true}
+        isEditMode={false}
       />
       <Button onClick={handleUploadFeatureImage} className="mt-5 w-full">
         Upload
