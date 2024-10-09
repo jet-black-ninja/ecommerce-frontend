@@ -74,6 +74,12 @@ const adminProductSlice = createSlice({
             state.isLoading = false;
             state.productList = action.payload.data;
         })
+        .addCase(addNewProduct.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(addNewProduct.fulfilled, (state) => {
+            state.isLoading = false;
+        })
         .addCase(addNewProduct.rejected, (state) => {
             state.isLoading = false;
             state.productList = [];

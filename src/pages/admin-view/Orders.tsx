@@ -20,12 +20,8 @@ import { Badge} from '@/components/ui/badge';
 import { AppDispatch, RootState } from "@/store/store";
 import AdminOrderDetailsView from "@/components/admin-view/order-details";
 
-interface orderItemProps{
-  _id: string;
-  orderDate: Date;
-  orderStatus: string;
-  totalAmount:number
-}
+//TODO add types as well as check if it works after adding dummy orders
+
 function AdminOrders() {
     const [openDetailDialog, setOpenDetailDialog] = useState<boolean>(false);
     const {orderList, orderDetails} = useSelector((state:RootState) => state.adminOrder);
@@ -61,7 +57,7 @@ function AdminOrders() {
               </TableHeader>
               <TableBody>
                 {orderList && orderList.length > 0 
-                ?orderList.map((orderItem:orderItemProps) => (
+                ?orderList.map((orderItem) => (
                     <TableRow>
                       <TableCell>{orderItem?._id}</TableCell>
                       <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
