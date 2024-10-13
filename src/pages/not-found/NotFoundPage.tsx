@@ -1,10 +1,10 @@
 
 function NotFoundPage() {
   return (
-    <div>
+    <h1>
         ERROR 404
       page Not Found
-    </div>
+    </h1>
   )
 }
 

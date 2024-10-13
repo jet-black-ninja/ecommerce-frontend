@@ -42,15 +42,14 @@ function App() {
           }
         />
         <Route path ="/auth" element={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <AuthLayout />
-            </CheckAuth>} >
+              <AuthLayout /> </CheckAuth>} >
           <Route path = "register" element ={<AuthRegister/>}/>
           <Route path = "login" element = {<AuthLogin/>}/>
         </Route>
-        {/* <Route path = "/admin" element={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
+        <Route path = "/admin" element={<CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AdminLayout />
-            </CheckAuth>}> */}
-        <Route path = "/admin" element={<AdminLayout />}>
+            </CheckAuth>}>
+        {/* <Route path = "/admin" element={<AdminLayout />}> */}
           <Route path = "dashboard" element={<AdminDashboard/>}/>
           <Route path = "orders" element ={<AdminOrders/>} />
           <Route path = "products" element = {<AdminProducts/>} />

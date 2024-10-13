@@ -2,9 +2,9 @@
 
 function NotAuthPage() {
   return (
-    <div>
-      Not Authorized Page
-    </div>
+    <h1>
+      You Do not have access To this page.
+    </h1>
   )
 }
 
