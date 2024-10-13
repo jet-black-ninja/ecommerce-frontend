@@ -116,12 +116,12 @@ export const shoppingViewHeaderMenuItems = [
     },
     {
         id: "men",
-        labe: "Men",
+        label: "Men",
         path: "/shop/listing",
     },
     {
         id:"women",
-        Label: "Women",
+        label: "Women",
         path: "/shop/listing",
     },
     {
