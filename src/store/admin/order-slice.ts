@@ -1,80 +1,78 @@
-import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 //TODO add types
 const initialState = {
-    orderList:[],
-    orderDetails:null,
-    isLoading:false,
-}
+  orderList: [],
+  orderDetails: null,
+  isLoading: false,
+};
 const serverURL = import.meta.env.VITE_SERVER_URL;
-export const getAllOrdersForAdmin = createAsyncThunk (
-    '/orders/getAllOrdersForAdmin',
-    async () => {
-        const response = await axios.get(
-            `${serverURL}/api/admin/orders/get`
-        );
-        return response.data;
-    }
+export const getAllOrdersForAdmin = createAsyncThunk(
+  '/orders/getAllOrdersForAdmin',
+  async () => {
+    const response = await axios.get(`${serverURL}/api/admin/orders/get`);
+    return response.data;
+  }
 );
 
-export const getOrderDetailsForAdmin = createAsyncThunk (
-    '/order/getOrderDetailsForAdmin',
-    async (id: string) => {
-        const response = await axios.get(
-            `${serverURL}/api/admin/orders/details/${id}`
-        );
+export const getOrderDetailsForAdmin = createAsyncThunk(
+  '/order/getOrderDetailsForAdmin',
+  async (id: string) => {
+    const response = await axios.get(
+      `${serverURL}/api/admin/orders/details/${id}`
+    );
 
-        return response.data;
-    }
-)
+    return response.data;
+  }
+);
 //TODO check order status type
-export const updateOrderStatus = createAsyncThunk (
-    '/order/updateOrderStatus',
-    async ({id, orderStatus}:{id: string; orderStatus:string}) =>{
-        const response = await axios.put(
-            `${serverURL}/api/admin/orders/update/${id}`,
-            {
-                orderStatus,
-            }
-        );
-        return response.data;
-    } 
-)
+export const updateOrderStatus = createAsyncThunk(
+  '/order/updateOrderStatus',
+  async ({ id, orderStatus }: { id: string; orderStatus: string }) => {
+    const response = await axios.put(
+      `${serverURL}/api/admin/orders/update/${id}`,
+      {
+        orderStatus,
+      }
+    );
+    return response.data;
+  }
+);
 
 const adminOrderSlice = createSlice({
-    name: "adminOrderSlice",
-    initialState,
-    reducers:{
-        resetOrderDetails: (state) => {
-            console.log('resetOrderDetails');
-            state.orderDetails = null;
-        }
+  name: 'adminOrderSlice',
+  initialState,
+  reducers: {
+    resetOrderDetails: (state) => {
+      console.log('resetOrderDetails');
+      state.orderDetails = null;
     },
-    extraReducers: (builder) => {
-        builder
-        .addCase(getAllOrdersForAdmin.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(getAllOrdersForAdmin.fulfilled, (state,action) => {
-            state.isLoading = false;
-            state.orderList = action.payload.data;
-        })
-        .addCase(getAllOrdersForAdmin.rejected, (state) => {
-            state.isLoading = false;
-            state.orderList = [];
-        })
-        .addCase(getOrderDetailsForAdmin.pending, (state) => {
-            state.isLoading = true;
-        })
-        .addCase(getOrderDetailsForAdmin.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.orderDetails = action.payload.data;
-        })
-        .addCase(getOrderDetailsForAdmin.rejected, (state) => {
-            state.isLoading = false;
-            state.orderDetails = null;
-        });
-    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllOrdersForAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllOrdersForAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.orderList = action.payload.data;
+      })
+      .addCase(getAllOrdersForAdmin.rejected, (state) => {
+        state.isLoading = false;
+        state.orderList = [];
+      })
+      .addCase(getOrderDetailsForAdmin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getOrderDetailsForAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.orderDetails = action.payload.data;
+      })
+      .addCase(getOrderDetailsForAdmin.rejected, (state) => {
+        state.isLoading = false;
+        state.orderDetails = null;
+      });
+  },
 });
 
 export const { resetOrderDetails } = adminOrderSlice.actions;

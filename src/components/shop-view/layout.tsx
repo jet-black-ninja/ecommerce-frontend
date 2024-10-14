@@ -1,16 +1,15 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from 'react-router-dom';
 import ShoppingHeader from './header';
 
 function layout() {
   return (
     <div className="flex flex-col bg-white overflow-hidden">
-        <ShoppingHeader/>
-        <main className="flex flex-col w-full">
-            <Outlet/>
-        </main>
+      <ShoppingHeader />
+      <main className="flex flex-col w-full">
+        <Outlet />
+      </main>
     </div>
-    
-  )
+  );
 }
 
-export default layout
+export default layout;

@@ -1,12 +1,12 @@
-import { logoutUser } from "@/store/auth-slice";
-import { useDispatch } from "react-redux";
-import { Button } from "../ui/button";
-import { AlignJustify, LogOut } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
-interface AdminHeaderProps{
+import { logoutUser } from '@/store/auth-slice';
+import { useDispatch } from 'react-redux';
+import { Button } from '../ui/button';
+import { AlignJustify, LogOut } from 'lucide-react';
+import { Dispatch, SetStateAction } from 'react';
+interface AdminHeaderProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
-function AdminHeader({ setOpen }:AdminHeaderProps) {
+function AdminHeader({ setOpen }: AdminHeaderProps) {
   const dispatch = useDispatch();
 
   function handleLogout() {
@@ -31,5 +31,4 @@ function AdminHeader({ setOpen }:AdminHeaderProps) {
     </header>
   );
 }
-  export default AdminHeader;
-  
+export default AdminHeader;

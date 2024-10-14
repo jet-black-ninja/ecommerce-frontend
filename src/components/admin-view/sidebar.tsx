@@ -1,33 +1,38 @@
-import { BadgeCheck, LayoutDashboard, ShoppingBasket, ChartNoAxesCombined } from "lucide-react"
-import { Dispatch, Fragment, SetStateAction } from "react";
-import { useNavigate } from "react-router-dom";
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
+import {
+  BadgeCheck,
+  LayoutDashboard,
+  ShoppingBasket,
+  ChartNoAxesCombined,
+} from 'lucide-react';
+import { Dispatch, Fragment, SetStateAction } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '../ui/sheet';
 
 const adminSidebarMenuItems = [
   {
-    id:'dashboard',
-    label:'Dashboard',
-    path:'/admin/dashboard',
-    icon:<LayoutDashboard/>
+    id: 'dashboard',
+    label: 'Dashboard',
+    path: '/admin/dashboard',
+    icon: <LayoutDashboard />,
   },
   {
-    id:'products',
-    label:'Products',
-    path:'/admin/products',
-    icon:<ShoppingBasket/>
+    id: 'products',
+    label: 'Products',
+    path: '/admin/products',
+    icon: <ShoppingBasket />,
   },
   {
-    id:'orders',
-    label:'Orders',
-    path:'/admin/orders',
-    icon:<BadgeCheck/>
-  }
-]
-interface MenuItemProps{
+    id: 'orders',
+    label: 'Orders',
+    path: '/admin/orders',
+    icon: <BadgeCheck />,
+  },
+];
+interface MenuItemProps {
   setOpen?: Dispatch<SetStateAction<boolean>>;
 }
-interface AdminSidebarProps{
-  open:boolean;
+interface AdminSidebarProps {
+  open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 function MenuItems({ setOpen }: MenuItemProps) {
@@ -51,7 +56,7 @@ function MenuItems({ setOpen }: MenuItemProps) {
     </nav>
   );
 }
-function AdminSidebar({ open, setOpen }:AdminSidebarProps) {
+function AdminSidebar({ open, setOpen }: AdminSidebarProps) {
   const navigate = useNavigate();
 
   return (
@@ -71,7 +76,7 @@ function AdminSidebar({ open, setOpen }:AdminSidebarProps) {
       </Sheet>
       <aside className="hidden w-64 flex-col border-r bg-background p-6 lg:flex">
         <div
-          onClick={() => navigate("/admin/dashboard")}
+          onClick={() => navigate('/admin/dashboard')}
           className="flex cursor-pointer items-center gap-2"
         >
           <ChartNoAxesCombined size={30} />
