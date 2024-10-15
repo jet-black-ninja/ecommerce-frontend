@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import UserCartWrapper from './UserCartWrapper.tsx';
+import UserCartWrapper from './cartWrapper.tsx';
 
 import { Avatar, AvatarFallback } from '../ui/avatar.tsx';
 function MenuItems() {
@@ -33,11 +33,11 @@ function MenuItems() {
     sessionStorage.removeItem('filters');
     const currentFilter =
       getCurrentMenuItem.id !== 'home' &&
-      getCurrentMenuItem.id !== 'products' &&
-      getCurrentMenuItem.id !== 'search'
+        getCurrentMenuItem.id !== 'products' &&
+        getCurrentMenuItem.id !== 'search'
         ? {
-            category: [getCurrentMenuItem.id],
-          }
+          category: [getCurrentMenuItem.id],
+        }
         : null;
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
     if (location.pathname.includes('listing') && currentFilter !== null)
@@ -61,9 +61,8 @@ function MenuItems() {
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className={`text-sm font-medium cursor-pointer hover:underline ${
-            isActiveMenuItem(menuItem) ? 'underline' : ''
-          }`}
+          className={`text-sm font-medium cursor-pointer hover:underline ${isActiveMenuItem(menuItem) ? 'underline' : ''
+            }`}
           key={menuItem.id}
         >
           {menuItem.label}
@@ -104,7 +103,7 @@ function HeaderRightContent() {
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
+            cartItems && cartItems?.items && cartItems?.items.length > 0
               ? cartItems.items
               : []
           }
