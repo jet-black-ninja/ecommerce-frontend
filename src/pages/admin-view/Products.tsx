@@ -66,8 +66,6 @@ function AdminProducts() {
           formData,
         })
       ).then((data) => {
-        console.log(data, 'edit');
-
         if (data?.payload?.success) {
           dispatch(fetchAllProducts());
           setFormData(initialFormData);
@@ -113,7 +111,7 @@ function AdminProducts() {
     dispatch(fetchAllProducts());
   }, [dispatch]);
 
-  // console.log(formData, "productList");
+  
 
   return (
     <div>

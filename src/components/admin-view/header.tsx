@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import { Button } from '../ui/button';
 import { AlignJustify, LogOut } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
+import { AppDispatch } from '@/store/store';
 interface AdminHeaderProps {
   setOpen: Dispatch<SetStateAction<boolean>>;
 }
 function AdminHeader({ setOpen }: AdminHeaderProps) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   function handleLogout() {
     dispatch(logoutUser());

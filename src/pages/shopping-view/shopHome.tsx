@@ -1,14 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useState } from "react";
-import { useDispatch, UseDispatch, useSelector } from "react-redux";
-import { fetchAllFilteredProducts, fetchProductDetails } from "@/store/shop/products-slice";
-import { useNavigate } from "react-router-dom";
-import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
-import { useToast } from "@/hooks/use-toast";
-import { getFeatureImages } from "@/store/common-slice";
-import ShoppingProductTile from '@/components/shop-view/productTile'
-import ProductDetailsDialog from '@/components/shop-view/productDetailsDialog'
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+import { useDispatch, UseDispatch, useSelector } from 'react-redux';
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from '@/store/shop/products-slice';
+import { useNavigate } from 'react-router-dom';
+import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
+import { useToast } from '@/hooks/use-toast';
+import { getFeatureImages } from '@/store/common-slice';
+import ShoppingProductTile from '@/components/shop-view/productTile';
+import ProductDetailsDialog from '@/components/shop-view/productDetailsDialog';
 import {
   Airplay,
   BabyIcon,
@@ -22,32 +25,31 @@ import {
   ShoppingBasket,
   UmbrellaIcon,
   WashingMachine,
-  WatchIcon
-} from "lucide-react";
-import { AppDispatch, RootState } from "@/store/store";
+  WatchIcon,
+} from 'lucide-react';
+import { AppDispatch, RootState } from '@/store/store';
+import { Product } from '@/interfaces/Product';
 
 const categoriesWithIcon = [
-  { id: "men", label: "Men", icon: ShirtIcon },
-  { id: "women", label: "Women", icon: CloudLightning },
-  { id: "kids", label: "Kids", icon: BabyIcon },
-  { id: "accessories", label: "Accessories", icon: WatchIcon },
-  { id: "footwear", label: "Footwear", icon: UmbrellaIcon },
+  { id: 'men', label: 'Men', icon: ShirtIcon },
+  { id: 'women', label: 'Women', icon: CloudLightning },
+  { id: 'kids', label: 'Kids', icon: BabyIcon },
+  { id: 'accessories', label: 'Accessories', icon: WatchIcon },
+  { id: 'footwear', label: 'Footwear', icon: UmbrellaIcon },
 ];
 
 const brandsWithIcon = [
-  { id: "nike", label: "Nike", icon: Shirt },
-  { id: "adidas", label: "Adidas", icon: WashingMachine },
-  { id: "puma", label: "Puma", icon: ShoppingBasket },
-  { id: "levi", label: "Levi's", icon: Airplay },
-  { id: "zara", label: "Zara", icon: Images },
-  { id: "h&m", label: "H&M", icon: Heater },
+  { id: 'nike', label: 'Nike', icon: Shirt },
+  { id: 'adidas', label: 'Adidas', icon: WashingMachine },
+  { id: 'puma', label: 'Puma', icon: ShoppingBasket },
+  { id: 'levi', label: "Levi's", icon: Airplay },
+  { id: 'zara', label: 'Zara', icon: Images },
+  { id: 'h&m', label: 'H&M', icon: Heater },
 ];
 
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const { productList, productDetails } = useSelector(
-    (state: RootState) => (state.shopProduct)
-  )
+  const { productList, productDetails } = useSelector((state: RootState) => state.shopProduct);
   const { featureImageList } = useSelector((state: RootState) => state.common);
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.auth);
@@ -63,7 +65,8 @@ function ShoppingHome() {
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
     navigate('/shop/listing');
   }
-  function handleGetProductDetails(getCurrentProductId) {
+
+  function handleGetProductDetails(getCurrentProductId: string) {
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
@@ -78,11 +81,17 @@ function ShoppingHome() {
       if (data?.payload?.success) {
         dispatch(fetchCartItems(user?.id));
         toast({
-          title: "Product Added To Cart",
+          title: 'Product Added To Cart',
         });
       }
     });
   }
+  useEffect(() => {
+    dispatch(fetchAllFilteredProducts({
+      filterParams: {},
+      sortParams: "price-lowtohigh",
+    }));
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getFeatureImages());
@@ -91,9 +100,9 @@ function ShoppingHome() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % featureImageList.length);
-    }, 15000)
+    }, 15000);
     return () => clearInterval(timer);
-  }, [featureImageList])
+  }, [featureImageList]);
   return (
     <div className="flex flex-col min-h-screen">
       <div className="relative w-full h-[600px] overflow-hidden">
@@ -102,31 +111,35 @@ function ShoppingHome() {
             <img
               src={slide?.image}
               key={index}
-              className={`${index === currentSlide ? "opacity-100" : "opacity-0"}
+              className={`${index === currentSlide ? 'opacity-100' : 'opacity-0'}
             absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
             />
           ))
           : null}
         <Button
-          variant='outline'
+          variant="outline"
           size="icon"
           onClick={() =>
             setCurrentSlide(
-              (prevSlide) => (prevSlide - 1 + featureImageList.length) % featureImageList.length
+              (prevSlide) =>
+                (prevSlide - 1 + featureImageList.length) %
+                featureImageList.length
             )
           }
-          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80">
+          className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white/80"
+        >
           <ChevronLeftIcon className="w-4 h-4" />
         </Button>
         <Button
-          variant='outline'
+          variant="outline"
           size="icon"
           onClick={() =>
             setCurrentSlide(
               (prevSlide) => (prevSlide + 1) % featureImageList.length
             )
           }
-          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80">
+          className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white/80"
+        >
           <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
@@ -137,8 +150,12 @@ function ShoppingHome() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {categoriesWithIcon.map((categoryItem) => (
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow "
-              onClick={() => handleNavigationToListingPage(categoryItem, "category")}>
+              <Card
+                className="cursor-pointer hover:shadow-lg transition-shadow "
+                onClick={() =>
+                  handleNavigationToListingPage(categoryItem, 'category')
+                }
+              >
                 <CardContent className="flex flex-col items-center justify-center p-6 min-h-[170px]">
                   <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
                   <span className="font-bold">{categoryItem.label}</span>
@@ -151,10 +168,14 @@ function ShoppingHome() {
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">Shop By Brand</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2" >
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
             {brandsWithIcon.map((brandItem) => (
-              <Card className="cursor-pointer hover:shadow-lg transition-shadow "
-              onClick={() => handleNavigationToListingPage(brandItem, "brand")}>
+              <Card
+                className="cursor-pointer hover:shadow-lg transition-shadow "
+                onClick={() =>
+                  handleNavigationToListingPage(brandItem, 'brand')
+                }
+              >
                 <CardContent className="flex flex-col items-center justify-center p-6 min-h-[170px]">
                   <brandItem.icon className="w-12 h-12 mb-4 text-primary" />
                   <span className="font-bold">{brandItem.label}</span>
@@ -163,7 +184,7 @@ function ShoppingHome() {
             ))}
           </div>
         </div>
-      </section >
+      </section>
       <section className="py-12">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
@@ -172,7 +193,7 @@ function ShoppingHome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
               ? productList.map((productItem) => (
-                <ShoppingProductTile
+                < ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
                   handleAddToCart={handleAddToCart}

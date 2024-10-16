@@ -33,11 +33,11 @@ function MenuItems() {
     sessionStorage.removeItem('filters');
     const currentFilter =
       getCurrentMenuItem.id !== 'home' &&
-        getCurrentMenuItem.id !== 'products' &&
-        getCurrentMenuItem.id !== 'search'
+      getCurrentMenuItem.id !== 'products' &&
+      getCurrentMenuItem.id !== 'search'
         ? {
-          category: [getCurrentMenuItem.id],
-        }
+            category: [getCurrentMenuItem.id],
+          }
         : null;
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
     if (location.pathname.includes('listing') && currentFilter !== null)
@@ -61,8 +61,9 @@ function MenuItems() {
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className={`text-sm font-medium cursor-pointer hover:underline ${isActiveMenuItem(menuItem) ? 'underline' : ''
-            }`}
+          className={`text-sm font-medium cursor-pointer hover:underline ${
+            isActiveMenuItem(menuItem) ? 'underline' : ''
+          }`}
           key={menuItem.id}
         >
           {menuItem.label}
@@ -84,7 +85,7 @@ function HeaderRightContent() {
   useEffect(() => {
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
-  console.log(cartItems, 'sachin');
+  // console.log(cartItems, 'sachin');
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>

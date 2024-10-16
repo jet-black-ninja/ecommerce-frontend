@@ -1,5 +1,3 @@
-import { Label } from '@radix-ui/react-label';
-
 export const registerFormControls = [
   {
     name: 'userName',
@@ -191,35 +189,36 @@ export const sortOptions = [
 export const addressFormControls = [
   {
     label: 'Address',
-    id: 'address',
+    name: 'address',
     componentType: 'text',
     type: 'text',
     placeholderText: 'Enter your address',
   },
   {
     label: 'City',
-    id: 'city',
+    name: 'city',
     componentType: 'text',
     type: 'text',
     placeholderText: 'Enter your city',
   },
   {
     label: 'Pincode',
-    id: 'pincode',
+    name: 'pincode',
     componentType: 'text',
     type: 'text',
     placeholderText: 'Enter your pincode',
   },
   {
     label: 'Phone',
-    id: 'phone',
+
+    name: 'phone',
     componentType: 'text',
     type: 'text',
     placeholderText: 'Enter your phone number',
   },
   {
     label: 'Notes',
-    id: 'notes',
+    name: 'notes',
     componentType: 'textarea',
     placeholderText: 'Enter any additional notes',
   },

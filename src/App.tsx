@@ -18,6 +18,7 @@ import Homepage from './pages/shopping-view/shopHome';
 import ListingPage from './pages/shopping-view/listing';
 import CheckoutPage from './pages/shopping-view/checkout';
 import AccountPage from './pages/shopping-view/account';
+import SearchPage from './pages/shopping-view/search';
 import { RootState, AppDispatch } from './store/store';
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -60,7 +61,6 @@ function App() {
             </CheckAuth>
           }
         >
-          {/* <Route path = "/admin" element={<AdminLayout />}> */}
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="orders" element={<AdminOrders />} />
           <Route path="products" element={<AdminProducts />} />
@@ -78,6 +78,7 @@ function App() {
           <Route path="listing" element={<ListingPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="search" element={<SearchPage />} />
         </Route>
         <Route path="/unauth-page" element={<NotAuthPage />} />
         <Route path="/*" element={<NotFoundPage />} />

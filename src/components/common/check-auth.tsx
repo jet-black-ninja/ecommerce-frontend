@@ -6,7 +6,7 @@ interface Props {
 }
 function CheckAuth({ isAuthenticated, user, children }: Props) {
   const location = useLocation();
-  console.log(location.pathname, isAuthenticated);
+  // console.log(location.pathname, isAuthenticated);
 
   if (location.pathname === '/') {
     if (!isAuthenticated) {

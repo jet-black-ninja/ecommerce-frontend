@@ -11,15 +11,16 @@ import {
   updateOrderStatus,
 } from '@/store/admin/order-slice';
 import { useToast } from '@/hooks/use-toast';
-
+import { AppDispatch, RootState } from '@/store/store';
+import { Order } from '@/interfaces/Order';
 const initialFormData = {
   status: '',
 };
 
 function AdminOrderDetailsView({ orderDetails }) {
   const [formData, setFormData] = useState(initialFormData);
-  const { user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
   const { toast } = useToast();
 
   console.log(orderDetails, 'order Details');
@@ -68,13 +69,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${
-                  orderDetails?.orderStatus === 'confirmed'
-                    ? 'bg-green-500'
-                    : orderDetails?.orderStatus === 'rejected'
-                      ? 'bg-red-600'
-                      : 'bg-black'
-                }`}
+                className={`py-1 px-3 ${orderDetails?.orderStatus === 'confirmed'
+                  ? 'bg-green-500'
+                  : orderDetails?.orderStatus === 'rejected'
+                    ? 'bg-red-600'
+                    : 'bg-black'
+                  }`}
               >
                 {orderDetails?.orderStatus}
               </Badge>
@@ -88,12 +88,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
                 ? orderDetails?.cartItems.map((item) => (
-                    <li className="flex items-center justify-between">
-                      <span>Title: {item.title}</span>
-                      <span>Quantity: {item.quantity}</span>
-                      <span>Price : {item.price}</span>
-                    </li>
-                  ))
+                  <li className="flex items-center justify-between">
+                    <span>Title: {item.title}</span>
+                    <span>Quantity: {item.quantity}</span>
+                    <span>Price : {item.price}</span>
+                  </li>
+                ))
                 : null}
             </ul>
           </div>

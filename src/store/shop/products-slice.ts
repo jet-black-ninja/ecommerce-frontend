@@ -9,13 +9,12 @@ const initialState = {
 const serverURL = import.meta.env.VITE_SERVER_URL;
 export const fetchAllFilteredProducts = createAsyncThunk(
   '/products/fetchAllProducts',
-  async (params: { filterParams: any; sortParams: any }) => {
-    console.log(fetchAllFilteredProducts, 'fetchAllFilteredProducts');
-    const { filterParams, sortParams } = params;
+  async ({filterParams, sortParams}) => {
     const query = new URLSearchParams({
       ...filterParams,
       sortBy: sortParams,
     });
+
     const result = await axios.get(
       `${serverURL}/api/shop/products/get?${query}`
     );

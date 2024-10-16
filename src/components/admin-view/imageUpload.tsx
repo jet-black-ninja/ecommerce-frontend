@@ -5,15 +5,16 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-// interface Props{
-//     imageFile: File | null;
-//     setImageFile: SetStateAction<File | null>;
-//     imageLoadingState: boolean;
-//     uploadedImageUrl: string | null;
-//     setUploadedImageUrl: Dispatch<SetStateAction<string | null>>;
-//     isEditMode: boolean;
-//     isCustomStyling?: boolean;
-// }
+import { Dispatch, SetStateAction } from '@reduxjs/toolkit';
+interface Props {
+  imageFile: File | null;
+  setImageFile: SetStateAction<File | null>;
+  imageLoadingState: boolean;
+  uploadedImageUrl: string | null;
+  setUploadedImageUrl: Dispatch<SetStateAction<string | null>>;
+  isEditMode: boolean;
+  isCustomStyling?: boolean;
+}
 //TODO add props
 function ProductImageUpload({
   imageFile,
@@ -24,7 +25,7 @@ function ProductImageUpload({
   setImageLoadingState,
   isEditMode,
   isCustomStyling = false,
-}) {
+}: Props) {
   const inputRef = useRef(null);
   const serverURL = import.meta.env.VITE_SERVER_URL;
   function handleImageFileChange(event: ChangeEvent<HTMLInputElement>) {
