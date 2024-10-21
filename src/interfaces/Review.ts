@@ -1,7 +1,7 @@
 export type Review = {
   productId: string;
-  userId: string;
-  userName: string;
+  userId: string | undefined;
+  userName: string | undefined;
   reviewMessage: string;
-  reviewValue: string;
+  reviewValue: number;
 };

@@ -1,8 +1,9 @@
-import { logoutUser } from '@/store/auth-slice';
 import { useDispatch } from 'react-redux';
-import { Button } from '../ui/button';
 import { AlignJustify, LogOut } from 'lucide-react';
 import { Dispatch, SetStateAction } from 'react';
+
+import { Button } from '../ui/button';
+import { logoutUser } from '@/store/auth-slice';
 import { AppDispatch } from '@/store/store';
 interface AdminHeaderProps {
   setOpen: Dispatch<SetStateAction<boolean>>;

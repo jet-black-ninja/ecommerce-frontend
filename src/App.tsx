@@ -1,9 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import AuthLayout from './components/auth/layout';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+
 import { checkAuth } from './store/auth-slice';
 import { Skeleton } from './components/ui/skeleton';
+import AuthLayout from './components/auth/layout';
 import AuthRegister from './pages/auth/register';
 import AuthLogin from './pages/auth/login';
 import AdminLayout from './components/admin-view/layout';

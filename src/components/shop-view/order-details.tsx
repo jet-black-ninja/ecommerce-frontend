@@ -1,11 +1,13 @@
 import { useSelector, UseSelector } from 'react-redux';
+
 import { Badge } from '../ui/badge';
 import { DialogContent } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Separator } from '../ui/separator';
 import { RootState } from '@/store/store';
+import { Order } from '@/interfaces/Order';
 
-function orderDetails({ orderDetails }) {
+function orderDetails(orderDetails: Order) {
   const { user } = useSelector((state: RootState) => state.auth);
   return (
     <DialogContent className="sm:max-w-[600px]">

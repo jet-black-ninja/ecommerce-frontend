@@ -1,21 +1,24 @@
 import { useEffect, useRef, ChangeEvent, DragEvent } from 'react';
 import axios from 'axios';
+import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react';
+import { Dispatch, SetStateAction } from 'react'; // Importing from react instead of @reduxjs/toolkit
+
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { FileIcon, UploadCloudIcon, XIcon } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-import { Dispatch, SetStateAction } from '@reduxjs/toolkit';
+
 interface Props {
   imageFile: File | null;
-  setImageFile: SetStateAction<File | null>;
+  setImageFile: Dispatch<SetStateAction<File | null>>;
   imageLoadingState: boolean;
   uploadedImageUrl: string | null;
   setUploadedImageUrl: Dispatch<SetStateAction<string | null>>;
+  setImageLoadingState: Dispatch<SetStateAction<boolean>>;
   isEditMode: boolean;
   isCustomStyling?: boolean;
 }
-//TODO add props
+
 function ProductImageUpload({
   imageFile,
   setImageFile,
@@ -26,11 +29,12 @@ function ProductImageUpload({
   isEditMode,
   isCustomStyling = false,
 }: Props) {
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const serverURL = import.meta.env.VITE_SERVER_URL;
+
   function handleImageFileChange(event: ChangeEvent<HTMLInputElement>) {
     const selectedFile = event.target.files?.[0];
-    if (selectedFile) setImageFile(selectedFile);
+    if (selectedFile) setImageFile(() => selectedFile); // Using functional update form
   }
 
   function handleDragOver(event: DragEvent<HTMLDivElement>) {
@@ -40,7 +44,7 @@ function ProductImageUpload({
   function handleDrop(event: DragEvent<HTMLDivElement>) {
     event.preventDefault();
     const droppedFile = event.dataTransfer.files?.[0];
-    if (droppedFile) setImageFile(droppedFile);
+    if (droppedFile) setImageFile(() => droppedFile); // Using functional update form
   }
 
   function handleRemoveImage() {
@@ -54,14 +58,15 @@ function ProductImageUpload({
     setImageLoadingState(true);
     const data = new FormData();
     data.append('my-file', imageFile);
-    const response = await axios.post(
-      `${serverURL}/api/admin/products/upload-image`,
-      data
-    );
-    // console.log(response, 'response');
-    if (response?.data?.success) {
-      setUploadedImageUrl(response.data.result.url);
-      setImageLoadingState(false);
+    try {
+      const response = await axios.post(`${serverURL}/api/admin/products/upload-image`, data);
+      if (response?.data?.success) {
+        setUploadedImageUrl(() => response.data.result.url); // Using functional update form
+        setImageLoadingState(() => false); // Using functional update form
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      setImageLoadingState(() => false); // Using functional update form
     }
   }
 
@@ -71,11 +76,11 @@ function ProductImageUpload({
 
   return (
     <div className={`w-full mt-4 ${isCustomStyling ? '' : 'max-w-md mx-auto'}`}>
-      <Label className="text-lg font-semibold mb-2 block"> Upload Image</Label>
+      <Label className="text-lg font-semibold mb-2 block">Upload Image</Label>
       <div
         onDragOver={handleDragOver}
         onDrop={handleDrop}
-        className={`${isEditMode ? 'opacity-60' : ''} border-2 border-dashed rounded-lg p-4  `}
+        className={`${isEditMode ? 'opacity-60' : ''} border-2 border-dashed rounded-lg p-4`}
       >
         <Input
           id="image-upload"
@@ -88,21 +93,19 @@ function ProductImageUpload({
         {!imageFile ? (
           <Label
             htmlFor="image-upload"
-            className={`${isEditMode ? 'cursor-not-allowed' : ''}
-                        flex flex-col items-center justify-center h-32 cursor-pointer
-                    }`}
+            className={`${isEditMode ? 'cursor-not-allowed' : ''} flex flex-col items-center justify-center h-32 cursor-pointer`}
           >
             <UploadCloudIcon className="w-10 h-10 text-muted-foreground mb-2" />
-            <span> Darg & Drop or Click to Upload Image</span>
+            <span>Drag & Drop or Click to Upload Image</span>
           </Label>
         ) : !imageLoadingState ? (
           <Skeleton className="h-10 bg-gray-100" />
         ) : (
-          <div className="flex ic justify-between">
+          <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <FileIcon className="w-8 text-primary mr-2 h-8" />
+              <FileIcon className="w-8 h-8 text-primary mr-2" />
             </div>
-            <p className="tex-sm font-medium">{imageFile.name}</p>
+            <p className="text-sm font-medium">{imageFile.name}</p>
             <Button
               variant="ghost"
               size="icon"
@@ -118,4 +121,5 @@ function ProductImageUpload({
     </div>
   );
 }
+
 export default ProductImageUpload;

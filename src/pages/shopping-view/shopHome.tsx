@@ -1,17 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { useEffect, useState } from 'react';
-import { useDispatch, UseDispatch, useSelector } from 'react-redux';
-import {
-  fetchAllFilteredProducts,
-  fetchProductDetails,
-} from '@/store/shop/products-slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
-import { useToast } from '@/hooks/use-toast';
-import { getFeatureImages } from '@/store/common-slice';
-import ShoppingProductTile from '@/components/shop-view/productTile';
-import ProductDetailsDialog from '@/components/shop-view/productDetailsDialog';
 import {
   Airplay,
   BabyIcon,
@@ -27,8 +16,19 @@ import {
   WashingMachine,
   WatchIcon,
 } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  fetchAllFilteredProducts,
+  fetchProductDetails,
+} from '@/store/shop/products-slice';
+import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
+import { useToast } from '@/hooks/use-toast';
+import { getFeatureImages } from '@/store/common-slice';
+import ShoppingProductTile from '@/components/shop-view/productTile';
+import ProductDetailsDialog from '@/components/shop-view/productDetailsDialog';
 import { AppDispatch, RootState } from '@/store/store';
-import { Product } from '@/interfaces/Product';
 
 const categoriesWithIcon = [
   { id: 'men', label: 'Men', icon: ShirtIcon },
@@ -49,7 +49,9 @@ const brandsWithIcon = [
 
 function ShoppingHome() {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const { productList, productDetails } = useSelector((state: RootState) => state.shopProduct);
+  const { productList, productDetails } = useSelector(
+    (state: RootState) => state.shopProduct
+  );
   const { featureImageList } = useSelector((state: RootState) => state.common);
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.auth);
@@ -87,10 +89,15 @@ function ShoppingHome() {
     });
   }
   useEffect(() => {
-    dispatch(fetchAllFilteredProducts({
-      filterParams: {},
-      sortParams: "price-lowtohigh",
-    }));
+    if (productDetails !== null) setOpenDetailsDialog(true);
+  }, [productDetails]);
+  useEffect(() => {
+    dispatch(
+      fetchAllFilteredProducts({
+        filterParams: {},
+        sortParams: 'price-lowtohigh',
+      })
+    );
   }, [dispatch]);
 
   useEffect(() => {
@@ -108,13 +115,13 @@ function ShoppingHome() {
       <div className="relative w-full h-[600px] overflow-hidden">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
-            <img
-              src={slide?.image}
-              key={index}
-              className={`${index === currentSlide ? 'opacity-100' : 'opacity-0'}
+              <img
+                src={slide?.image}
+                key={index}
+                className={`${index === currentSlide ? 'opacity-100' : 'opacity-0'}
             absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
-            />
-          ))
+              />
+            ))
           : null}
         <Button
           variant="outline"
@@ -193,12 +200,12 @@ function ShoppingHome() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {productList && productList.length > 0
               ? productList.map((productItem) => (
-                < ShoppingProductTile
-                  handleGetProductDetails={handleGetProductDetails}
-                  product={productItem}
-                  handleAddToCart={handleAddToCart}
-                />
-              ))
+                  <ShoppingProductTile
+                    handleGetProductDetails={handleGetProductDetails}
+                    product={productItem}
+                    handleAddToCart={handleAddToCart}
+                  />
+                ))
               : null}
           </div>
         </div>

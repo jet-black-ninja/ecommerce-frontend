@@ -1,10 +1,12 @@
+import { FormEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+
 import CommonForm from '@/components/common/form';
 import { useToast } from '@/hooks/use-toast';
 import { registerFormControls } from '../../config/config';
 import { registerUser } from '@/store/auth-slice';
-import { FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { AppDispatch } from '@/store/store';
 
 const initialState = {
   userName: '',
@@ -14,7 +16,7 @@ const initialState = {
 
 export default function AuthRegister() {
   const [formData, setFormData] = useState(initialState);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { toast } = useToast();
 
