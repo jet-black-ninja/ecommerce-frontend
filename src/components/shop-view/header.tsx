@@ -5,13 +5,14 @@ import {
   useNavigate,
   useSearchParams,
 } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Button } from '../ui/button';
 import { shoppingViewHeaderMenuItems } from '@/config/config';
 import { Label } from '../ui/label';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { useEffect, useState } from 'react';
 import { logoutUser } from '@/store/auth-slice';
 import { fetchCartItems } from '@/store/shop/cart-slice';
 import {
@@ -23,8 +24,8 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import UserCartWrapper from './cartWrapper.tsx';
-
 import { Avatar, AvatarFallback } from '../ui/avatar.tsx';
+
 function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,30 +41,20 @@ function MenuItems() {
           }
         : null;
     sessionStorage.setItem('filters', JSON.stringify(currentFilter));
-    if (location.pathname.includes('listing') && currentFilter !== null)
+
+    if (location.pathname.includes('listing') && currentFilter !== null) {
       setSearchParams(
         new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
       );
-    else navigate(getCurrentMenuItem.path);
+    } else navigate(getCurrentMenuItem.path);
   }
-  function isActiveMenuItem(menuItem: any) {
-    // Check if the path matches
-    const isActivePath = location.pathname === menuItem.path;
 
-    // Check if query parameters (like category) match for the listing pages
-    const currentCategory = searchParams.get('category');
-    const isFilteredMatch = currentCategory && currentCategory === menuItem.id;
-
-    return isActivePath && (!currentCategory || isFilteredMatch);
-  }
   return (
     <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           onClick={() => handleNavigate(menuItem)}
-          className={`text-sm font-medium cursor-pointer hover:underline ${
-            isActiveMenuItem(menuItem) ? 'underline' : ''
-          }`}
+          className={`text-sm font-medium cursor-pointer hover:underline`}
           key={menuItem.id}
         >
           {menuItem.label}

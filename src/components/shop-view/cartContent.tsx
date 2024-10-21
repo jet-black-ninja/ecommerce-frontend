@@ -1,9 +1,10 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { Minus, Plus, Trash } from 'lucide-react';
+
 import { useToast } from '@/hooks/use-toast';
 import { deleteCartItem, updateCartQuantity } from '@/store/shop/cart-slice';
 import { AppDispatch, RootState } from '@/store/store';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../ui/button';
-import { Minus, Plus, Trash } from 'lucide-react';
 
 function UserCartItemContent({ cartItem }) {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -21,7 +22,7 @@ function UserCartItemContent({ cartItem }) {
           (item) => item.productId === getCartItem?.productId
         );
         const getCurrentProductIndex = productList.findIndex(
-          (product) => (product._id = getCartItem?.productId)
+          (product) => product._id === getCartItem?.productId
         );
         const getTotalStock = productList[getCurrentProductIndex].totalStock;
 

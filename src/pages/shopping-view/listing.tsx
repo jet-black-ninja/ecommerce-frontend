@@ -1,7 +1,7 @@
 import { ArrowUpDownIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { createSearchParams, useSearchParams } from 'react-router-dom';
 import { DropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
 
 import ProductFilter from '@/components/shop-view/productFilter';
@@ -24,7 +24,7 @@ import {
 } from '@/store/shop/products-slice';
 import { AppDispatch, RootState } from '@/store/store';
 
-function creatSearchParamHelper(filterParams) {
+function createSearchParamsHelper(filterParams) {
   const queryParams = [];
 
   for (const [key, value] of Object.entries(filterParams)) {
@@ -50,9 +50,10 @@ function ListingPage() {
   const { toast } = useToast();
 
   const categorySearchParam = searchParams.get('category');
-  const handleSort = (value) => {
+  const handleSort = (value: string) => {
     setSort(value);
   };
+
   function handleFilter(getSectionId, getCurrentOption) {
     let cpyFilters = { ...filters };
     const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
@@ -65,21 +66,20 @@ function ListingPage() {
     } else {
       const indexOfCurrentOption =
         cpyFilters[getSectionId].indexOf(getCurrentOption);
-      if (indexOfCurrentOption === -1) {
+      if (indexOfCurrentOption === -1)
         cpyFilters[getSectionId].push(getCurrentOption);
-      } else {
-        cpyFilters[getSectionId].splice(indexOfCurrentOption, 1);
-      }
-
-      setFilters(cpyFilters);
-      sessionStorage.setItem('filters', JSON.stringify(cpyFilters));
+      else cpyFilters[getSectionId].splice(indexOfCurrentOption, 1);
     }
+
+    setFilters(cpyFilters);
+    sessionStorage.setItem('filters', JSON.stringify(cpyFilters));
   }
+
   function handleGetProductDetails(currentProductId: string) {
     dispatch(fetchProductDetails(currentProductId));
   }
 
-  function handleAddtoCart(getCurrentProductId: string, getTotalStock: number) {
+  function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
     // console.log(cartItems);
     let getCartItems = cartItems.items || [];
 
@@ -119,6 +119,13 @@ function ListingPage() {
     setSort('price-lowtohigh');
     setFilters(JSON.parse(sessionStorage.getItem('filters')) || {});
   }, [categorySearchParam]);
+
+  useEffect(() => {
+    if (filters && Object.keys(filters).length > 0) {
+      const createQueryString = createSearchParamsHelper(filters);
+      setSearchParams(new URLSearchParams(createQueryString));
+    }
+  }, [filters]);
 
   useEffect(() => {
     if (filters !== null && sort !== null)
@@ -174,7 +181,7 @@ function ListingPage() {
                 <ShoppingProductTile
                   handleGetProductDetails={handleGetProductDetails}
                   product={productItem}
-                  handleAddToCart={handleAddtoCart}
+                  handleAddToCart={handleAddToCart}
                 />
               ))
             : null}
