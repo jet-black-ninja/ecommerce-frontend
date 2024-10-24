@@ -7,15 +7,18 @@ import { Separator } from '../ui/separator';
 import { RootState } from '@/store/store';
 import { Order } from '@/interfaces/Order';
 
-function orderDetails(orderDetails: Order) {
+function orderDetails({ orderDetails }: Order) {
   const { user } = useSelector((state: RootState) => state.auth);
+  if (!orderDetails) {
+    return <></>;
+  }
   return (
     <DialogContent className="sm:max-w-[600px]">
       <div className="grid gap-6">
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
             <p className="font-medium">Order Id</p>
-            <Label>{orderDetails?.id}</Label>
+            <Label>{orderDetails._id}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>

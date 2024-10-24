@@ -79,7 +79,7 @@ function CheckoutPage() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, 'order finish data');
+      // console.log(data, 'order finish data');
       if (data?.payload?.success) {
         setIsPaymentStart(true);
       } else {
@@ -116,7 +116,7 @@ function CheckoutPage() {
           <div className="mt-4 w-full">
             <Button
               className="w-full"
-              onClick={() => handleInitialPaypalPayment}
+              onClick={handleInitialPaypalPayment}
             >
               {isPaymentStart
                 ? 'Processing Paypal Payment ...'

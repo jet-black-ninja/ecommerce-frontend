@@ -11,7 +11,7 @@ function AdminDashboard() {
   const dispatch = useDispatch<AppDispatch>();
   const { featureImageList } = useSelector((state: RootState) => state.common);
 
-  console.log(uploadedImageUrl, 'uploadedImageUrl');
+  // console.log(uploadedImageUrl, 'uploadedImageUrl');
 
   function handleUploadFeatureImage() {
     dispatch(addFeatureImage(uploadedImageUrl)).then((data) => {
@@ -27,7 +27,7 @@ function AdminDashboard() {
     dispatch(getFeatureImages());
   }, [dispatch]);
 
-  console.log(featureImageList, 'featureImageList');
+  // console.log(featureImageList, 'featureImageList');
 
   return (
     <div>

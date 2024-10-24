@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import CommonForm from '../common/form';
-import { DialogContent } from '../ui/dialog';
+import { DialogContent, DialogTitle } from '../ui/dialog';
 import { Label } from '../ui/label';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
@@ -23,8 +24,8 @@ function AdminOrderDetailsView({ orderDetails }) {
   const dispatch = useDispatch<AppDispatch>();
   const { toast } = useToast();
 
-  console.log(orderDetails, 'order Details');
-
+  // console.log(orderDetails, 'order Details');
+  console.log(formData);
   function handleUpdateStatus(event) {
     event.preventDefault();
     const { status } = formData;
@@ -40,9 +41,12 @@ function AdminOrderDetailsView({ orderDetails }) {
       });
     });
   }
-
+  if (!orderDetails) {
+    return <></>; // or a loading spinner
+  }
   return (
     <DialogContent className="sm:max-w-[600px]">
+      <DialogTitle>Order Details</DialogTitle>
       <div className="grid gap-6">
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
@@ -69,12 +73,13 @@ function AdminOrderDetailsView({ orderDetails }) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${orderDetails?.orderStatus === 'confirmed'
-                  ? 'bg-green-500'
-                  : orderDetails?.orderStatus === 'rejected'
-                    ? 'bg-red-600'
-                    : 'bg-black'
-                  }`}
+                className={`py-1 px-3 ${
+                  orderDetails?.orderStatus === 'confirmed'
+                    ? 'bg-green-500'
+                    : orderDetails?.orderStatus === 'rejected'
+                      ? 'bg-red-600'
+                      : 'bg-black'
+                }`}
               >
                 {orderDetails?.orderStatus}
               </Badge>
@@ -88,12 +93,12 @@ function AdminOrderDetailsView({ orderDetails }) {
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
                 ? orderDetails?.cartItems.map((item) => (
-                  <li className="flex items-center justify-between">
-                    <span>Title: {item.title}</span>
-                    <span>Quantity: {item.quantity}</span>
-                    <span>Price : {item.price}</span>
-                  </li>
-                ))
+                    <li className="flex items-center justify-between">
+                      <span>Title: {item.title}</span>
+                      <span>Quantity: {item.quantity}</span>
+                      <span>Price : {item.price}</span>
+                    </li>
+                  ))
                 : null}
             </ul>
           </div>
@@ -119,7 +124,7 @@ function AdminOrderDetailsView({ orderDetails }) {
               {
                 label: 'Order Status',
                 name: 'status',
-                componentTypes: 'select',
+                componentType: 'select',
                 options: [
                   { id: 'pending', label: 'Pending' },
                   { id: 'inProcess', label: 'In Process' },

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog } from '@/components/ui/dialog';
@@ -10,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllOrdersForAdmin,
   getOrderDetailsForAdmin,
@@ -27,6 +28,7 @@ function AdminOrders() {
   const { orderList, orderDetails } = useSelector(
     (state: RootState) => state.adminOrder
   );
+  // console.log(orderDetails , "orders Detail");
   const dispatch = useDispatch<AppDispatch>();
 
   function handleFetchOrderDetail(getId: string) {
@@ -86,7 +88,7 @@ function AdminOrders() {
                       }}
                     >
                       <Button
-                        onClick={() => handleFetchOrderDetail(orderItem?._id)}
+                        onClick={() => handleFetchOrderDetail(orderItem._id)}
                       >
                         View Details
                       </Button>

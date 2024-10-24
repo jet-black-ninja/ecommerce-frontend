@@ -28,7 +28,7 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
 //TODO check order status type
 export const updateOrderStatus = createAsyncThunk(
   '/order/updateOrderStatus',
-  async ({ id, orderStatus }: { id: string; orderStatus: string }) => {
+  async ({ id, orderStatus }) => {
     const response = await axios.put(
       `${serverURL}/api/admin/orders/update/${id}`,
       {

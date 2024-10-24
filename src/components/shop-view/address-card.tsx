@@ -8,7 +8,6 @@ function addressCard({
   handleDeleteAddress,
   handleEditAddress,
   setCurrentSelectedAddress,
-  key,
 }) {
   return (
     <Card

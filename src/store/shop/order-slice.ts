@@ -64,7 +64,7 @@ export const getAllOrdersByUser = createAsyncThunk(
 export const getOrderDetails = createAsyncThunk(
   '/order/getOrderDetails',
   async (orderId) => {
-    const response = await axios.get(`${serverURL}/api/shop/order/${orderId}`);
+    const response = await axios.get(`${serverURL}/api/shop/order/details/${orderId}`);
     return response.data;
   }
 );
