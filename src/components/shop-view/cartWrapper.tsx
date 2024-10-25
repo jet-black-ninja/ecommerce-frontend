@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
+
 import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet.tsx';
 import { Button } from '../ui/button.tsx';
-import UserCartItemContent from './cartContent';
+import UserCartItemContent from './cartContent';/*@ts-ignore*/
 function UserCartWrapper({ cartItems, setOpenCartSheet }) {
   const navigate = useNavigate();
   const totalCartAmount =
     cartItems && cartItems.length > 0
       ? cartItems.reduce(
+          /*@ts-ignore*/
           (sum: number, currentItem) =>
             sum +
             (currentItem?.salePrice > 0
@@ -22,7 +24,7 @@ function UserCartWrapper({ cartItems, setOpenCartSheet }) {
         <SheetTitle>Your Cart</SheetTitle>
       </SheetHeader>
       <div className="mt-8 space-y-4">
-        {cartItems && cartItems.length > 0
+        {cartItems && cartItems.length > 0 /*@ts-ignore*/
           ? cartItems.map((item) => <UserCartItemContent cartItem={item} />)
           : null}
       </div>

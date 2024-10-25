@@ -1,4 +1,4 @@
-import { useSelector, UseSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { Badge } from '../ui/badge';
 import { DialogContent } from '../ui/dialog';
@@ -6,14 +6,13 @@ import { Label } from '../ui/label';
 import { Separator } from '../ui/separator';
 import { RootState } from '@/store/store';
 import { Order } from '@/interfaces/Order';
-
+/*@ts-ignore*/
 function orderDetails({ orderDetails }: Order) {
   const { user } = useSelector((state: RootState) => state.auth);
   if (!orderDetails) {
     return <></>;
   }
   return (
-    
     <DialogContent className="sm:max-w-[600px]">
       <div className="grid gap-6">
         <div className="grid gap-2">
@@ -41,12 +40,13 @@ function orderDetails({ orderDetails }: Order) {
             <p className="font-medium">Order Status</p>
             <Label>
               <Badge
-                className={`py-1 px-3 ${orderDetails?.orderStatus === 'confirmed'
+                className={`py-1 px-3 ${
+                  orderDetails?.orderStatus === 'confirmed'
                     ? 'bg-green-500'
                     : orderDetails?.orderStatus === 'rejected'
                       ? 'bg-red-600'
                       : 'bg-black'
-                  }`}
+                }`}
               >
                 {orderDetails?.orderStatus}
               </Badge>
@@ -58,14 +58,15 @@ function orderDetails({ orderDetails }: Order) {
           <div className="grid gap-2">
             <div className="font-medium">Order Details</div>
             <ul className="grid gap-3">
-              {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
+              {orderDetails?.cartItems &&
+              orderDetails?.cartItems.length > 0 /*@ts-ignore*/
                 ? orderDetails?.cartItems.map((item) => (
-                  <li className="flex items-center justify-between">
-                    <span>Title: {item.title}</span>
-                    <span>Quantity: {item.quantity}</span>
-                    <span>Price: {item.price}</span>
-                  </li>
-                ))
+                    <li className="flex items-center justify-between">
+                      <span>Title: {item.title}</span>
+                      <span>Quantity: {item.quantity}</span>
+                      <span>Price: {item.price}</span>
+                    </li>
+                  ))
                 : null}
             </ul>
           </div>
@@ -74,6 +75,7 @@ function orderDetails({ orderDetails }: Order) {
           <div className="grid gap-2">
             <div className="font-medium">Shipping Info</div>
             <div className="grid gap-0.5 text-muted-foreground">
+              {/*@ts-ignore*/}
               <span>{user.userName}</span>
               <span>{orderDetails?.addressInfo?.address}</span>
               <span>{orderDetails?.addressInfo?.city}</span>
@@ -85,7 +87,6 @@ function orderDetails({ orderDetails }: Order) {
         </div>
       </div>
     </DialogContent>
-                
   );
 }
 

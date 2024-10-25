@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, UseDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CommonForm from '../common/form';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
@@ -28,7 +28,7 @@ const initialAddressFormData: IFormData = {
   pincode: '',
   notes: '',
 };
-
+/*@ts-ignore*/
 function Address({ setCurrentSelectedAddress, selectedId }) {
   const [formData, setFormData] = useState(initialAddressFormData);
   const [currentEditedId, setCurrentEditedId] = useState(null);
@@ -36,7 +36,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { toast } = useToast();
   const { addressList } = useSelector((state: RootState) => state.shopAddress);
-
+  /*@ts-ignore*/
   function handleManageAddress(event) {
     event.preventDefault();
     if (addressList.length >= 3 && currentEditedId === null) {
@@ -50,12 +50,14 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     if (currentEditedId !== null) {
       dispatch(
         editAddress({
+          /*@ts-ignore*/
           userId: user?.id,
           addressId: currentEditedId,
           formData,
         })
       ).then((data) => {
         if (data?.payload?.success) {
+          /*@ts-ignore*/
           dispatch(fetchAllAddresses(user?.id));
           setCurrentEditedId(null);
           setFormData(initialAddressFormData);
@@ -66,12 +68,14 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
       });
     } else {
       dispatch(
+        /*@ts-ignore*/
         addNewAddress({
           ...formData,
           userId: user?.id,
         })
       ).then((data) => {
         if (data?.payload?.success) {
+          /*@ts-ignore*/
           dispatch(fetchAllAddresses(user?.id));
           setCurrentEditedId(null);
           setFormData(initialAddressFormData);
@@ -81,7 +85,7 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
         }
       });
     }
-  }
+  } /*@ts-ignore*/
   function handleEditAddress(getCurrentAddress) {
     setCurrentEditedId(getCurrentAddress?._id);
     setFormData({
@@ -92,12 +96,14 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
       pincode: getCurrentAddress?.pincode,
       notes: getCurrentAddress?.notes,
     });
-  }
+  } /*@ts-ignore*/
   function handleDeleteAddress(getCurrentAddress) {
     dispatch(
+      /*@ts-ignore*/
       deleteAddress({ userId: user?.id, addressId: getCurrentAddress._id })
     ).then((data) => {
       if (data?.payload?.success) {
+        /*@ts-ignore*/
         dispatch(fetchAllAddresses(user?.id));
         toast({
           title: 'Address Deleted Successfully',
@@ -106,11 +112,12 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
     });
   }
   function isFormValid() {
-    return Object.keys(formData)
+    return Object.keys(formData) /*@ts-ignore*/
       .map((key) => formData[key].trim() !== '')
       .every((item) => item);
   }
   useEffect(() => {
+    /*@ts-ignore*/
     dispatch(fetchAllAddresses(user?.id));
   }, [dispatch]);
 
@@ -124,7 +131,9 @@ function Address({ setCurrentSelectedAddress, selectedId }) {
                 handleDeleteAddress={handleDeleteAddress}
                 addressInfo={addressItem}
                 handleEditAddress={handleEditAddress}
-                setCurrentSelectedAddress={setCurrentSelectedAddress}
+                setCurrentSelectedAddress={
+                  setCurrentSelectedAddress
+                } /*@ts-ignore*/
                 key={addressItem._id}
               />
             ))

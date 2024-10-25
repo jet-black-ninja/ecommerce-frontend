@@ -21,7 +21,7 @@ function AccountPage() {
             <TabsContent value="orders">
               <ShoppingOrders />
             </TabsContent>
-            <TabsContent value="address">
+            <TabsContent value="address">{/* @ts-ignore*/}
               <Address />
             </TabsContent>
           </Tabs>

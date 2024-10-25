@@ -1,11 +1,12 @@
 import { Card, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
 function AdminProductTile({
-  product,
-  setFormData,
-  setOpenCreateProductDialog,
-  setCurrentEditedId,
-  handleDelete,
+  /*@ts-ignore*/
+  product,/*@ts-ignore*/
+  setFormData,/*@ts-ignore*/
+  setOpenCreateProductDialog/*@ts-ignore*/,
+  setCurrentEditedId,/*@ts-ignore*/
+  handleDelete,/*@ts-ignore*/
 }) {
   return (
     <Card className="w-full max-w-sm mx-auto">

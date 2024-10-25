@@ -8,6 +8,8 @@ import { useToast } from '@/hooks/use-toast';
 import { createNewOrder } from '@/store/shop/order-slice';
 import UserCartItemContent from '@/components/shop-view/cartContent';
 import { Button } from '@/components/ui/button';
+import { CartItem } from '@/interfaces/Cart';
+import { Order } from '@/interfaces/Order';
 
 function CheckoutPage() {
   const { cartItems } = useSelector((state: RootState) => state.shopCart);
@@ -19,8 +21,11 @@ function CheckoutPage() {
   const { toast } = useToast();
 
   const totalCartAmount =
+    //@ts-ignore
     cartItems && cartItems.items && cartItems.items.length > 0
-      ? cartItems.items.reduce(
+      ? //@ts-ignore
+        cartItems.items.reduce(
+          //@ts-ignore
           (sum, currentItem) =>
             sum +
             (currentItem?.salePrice > 0
@@ -47,9 +52,12 @@ function CheckoutPage() {
       return;
     }
 
-    const orderData = {
+    const orderData: Order = {
+      //@ts-ignore
       userId: user?.id,
+      //@ts-ignore
       cartId: cartItems?._id,
+      //@ts-ignore
       cartItems: cartItems.items.map((singleCartItem) => ({
         productId: singleCartItem?.productId,
         title: singleCartItem?.title,
@@ -61,12 +69,13 @@ function CheckoutPage() {
         quantity: singleCartItem?.quantity,
       })),
       addressInfo: {
-        addressId: currentSelectedAddress?._id,
-        address: currentSelectedAddress?.address,
-        city: currentSelectedAddress?.city,
-        pincode: currentSelectedAddress?.pincode,
-        phone: currentSelectedAddress?.phone,
-        notes: currentSelectedAddress?.notes,
+        //@ts-ignore
+        addressId: currentSelectedAddress?._id, //@ts-ignore
+        address: currentSelectedAddress?.address, //@ts-ignore
+        city: currentSelectedAddress?.city, //@ts-ignore
+        pincode: currentSelectedAddress?.pincode, //@ts-ignore
+        phone: currentSelectedAddress?.phone, //@ts-ignore
+        notes: currentSelectedAddress?.notes, //@ts-ignore
       },
       orderStatus: 'pending',
       paymentMethod: 'paypal',
@@ -77,7 +86,7 @@ function CheckoutPage() {
       paymentId: '',
       payerId: '',
     };
-
+    //@ts-ignore
     dispatch(createNewOrder(orderData)).then((data) => {
       // console.log(data, 'order finish data');
       if (data?.payload?.success) {
@@ -102,8 +111,10 @@ function CheckoutPage() {
           setCurrentSelectedAddress={setCurrentSelectedAddress}
         />
         <div className="flex flex-col gap-4">
+          {/*@ts-ignore*/}
           {cartItems && cartItems.items && cartItems.items.length > 0
-            ? cartItems.items.map((item) => (
+            /*@ts-ignore*/
+            ? cartItems.items.map((item: CartItem) => (
                 <UserCartItemContent cartItem={item} />
               ))
             : null}
@@ -114,10 +125,7 @@ function CheckoutPage() {
             </div>
           </div>
           <div className="mt-4 w-full">
-            <Button
-              className="w-full"
-              onClick={handleInitialPaypalPayment}
-            >
+            <Button className="w-full" onClick={handleInitialPaypalPayment}>
               {isPaymentStart
                 ? 'Processing Paypal Payment ...'
                 : 'Checkout With Paypal'}

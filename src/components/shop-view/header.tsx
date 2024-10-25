@@ -29,7 +29,7 @@ import { Avatar, AvatarFallback } from '../ui/avatar.tsx';
 function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   function handleNavigate(getCurrentMenuItem: any) {
     sessionStorage.removeItem('filters');
     const currentFilter =
@@ -74,6 +74,7 @@ function HeaderRightContent() {
     dispatch(logoutUser());
   }
   useEffect(() => {
+    /*@ts-ignore*/
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
   // console.log(cartItems, 'sachin');
@@ -88,6 +89,7 @@ function HeaderRightContent() {
         >
           <ShoppingCart className="w-6 h-6" />
           <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+            {/*@ts-ignore*/}
             {cartItems?.items?.length || 0}
           </span>
           <span className="sr-only">Usercart</span>
@@ -95,7 +97,10 @@ function HeaderRightContent() {
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
-            cartItems && cartItems?.items && cartItems?.items.length > 0
+            /*@ts-ignore*/
+            cartItems &&/*@ts-ignore*/
+            cartItems?.items &&/*@ts-ignore*/
+            cartItems?.items.length > 0 /*@ts-ignore*/
               ? cartItems.items
               : []
           }

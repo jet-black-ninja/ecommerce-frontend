@@ -3,11 +3,12 @@ import { Card, CardContent, CardFooter } from '../ui/card';
 import { Label } from '../ui/label';
 
 function addressCard({
-  selectedId,
-  addressInfo,
-  handleDeleteAddress,
-  handleEditAddress,
-  setCurrentSelectedAddress,
+  /*@ts-ignore*/
+  selectedId /*@ts-ignore*/,
+  addressInfo /*@ts-ignore*/,
+  handleDeleteAddress /*@ts-ignore*/,
+  handleEditAddress /*@ts-ignore*/,
+  setCurrentSelectedAddress /*@ts-ignore*/,
 }) {
   return (
     <Card

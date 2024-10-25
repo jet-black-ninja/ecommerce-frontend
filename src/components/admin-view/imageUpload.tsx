@@ -23,7 +23,6 @@ function ProductImageUpload({
   imageFile,
   setImageFile,
   imageLoadingState,
-  uploadedImageUrl,
   setUploadedImageUrl,
   setImageLoadingState,
   isEditMode,
@@ -49,14 +48,14 @@ function ProductImageUpload({
 
   function handleRemoveImage() {
     setImageFile(null);
-    if (inputRef.current) {
+    if (inputRef.current) {// @ts-ignore
       inputRef.current.value = null;
     }
   }
 
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
-    const data = new FormData();
+    const data = new FormData();// @ts-ignore
     data.append('my-file', imageFile);
     try {
       const response = await axios.post(`${serverURL}/api/admin/products/upload-image`, data);

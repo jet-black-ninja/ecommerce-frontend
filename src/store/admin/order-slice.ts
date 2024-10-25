@@ -1,7 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-//TODO add types
-const initialState = {
+
+import { Order } from '@/interfaces/Order';
+type OrderStatus =
+  | 'pending'
+  | 'inProcess'
+  | 'inShipping'
+  | 'delivered'
+  | 'rejected';
+interface IState {
+  orderList: Order[];
+  orderDetails: Order | null;
+  isLoading: boolean;
+}
+const initialState: IState = {
   orderList: [],
   orderDetails: null,
   isLoading: false,
@@ -25,11 +37,10 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
     return response.data;
   }
 );
-//TODO check order status type
 export const updateOrderStatus = createAsyncThunk(
   '/order/updateOrderStatus',
-  async ({ id, orderStatus }) => {
-    console.log('updateOrderStatus', id, orderStatus);
+  async ({ id, orderStatus }: { id: string; orderStatus: OrderStatus }) => {
+    // console.log('updateOrderStatus', id, orderStatus);
     const response = await axios.put(
       `${serverURL}/api/admin/orders/update/${id}`,
       { orderStatus }

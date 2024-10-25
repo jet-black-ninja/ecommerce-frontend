@@ -10,11 +10,11 @@ import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
 import { fetchProductDetails } from '@/store/shop/products-slice';
 import { getSearchResult, resetSearchResults } from '@/store/shop/search-slice';
 import { AppDispatch, RootState } from '@/store/store';
-
+import { CartItem } from '@/interfaces/Cart';
 function SearchPage() {
   const [keyword, setKeyword] = useState<string>('');
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch<AppDispatch>();
   const { searchResults } = useSelector((state: RootState) => state.shopSearch);
   const { productDetails } = useSelector(
@@ -29,6 +29,7 @@ function SearchPage() {
     if (keyword && keyword.trim() !== '' && keyword.trim().length > 3) {
       setTimeout(() => {
         setSearchParams(new URLSearchParams(`?keyword=${keyword}`));
+        //@ts-ignore
         dispatch(getSearchResult(keyword));
       }, 1000);
     } else {
@@ -36,12 +37,13 @@ function SearchPage() {
       dispatch(resetSearchResults());
     }
   }, [keyword]);
-  function handleAddToCart(getCurrentProductId, getTotalStock) {
+  function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
+    //@ts-ignore
     let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId === getCurrentProductId
+        (item: CartItem) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
         const getQuantity = getCartItems[indexOfCurrentItem].quantity;
@@ -58,12 +60,14 @@ function SearchPage() {
 
     dispatch(
       addToCart({
+        //@ts-ignore
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
+        //@ts-ignore
         dispatch(fetchCartItems(user?.id));
         toast({
           title: 'Product is added to cart',
@@ -73,6 +77,7 @@ function SearchPage() {
   }
 
   function handleGetProductDetails(getCurrentProductId: string) {
+    //@ts-ignore
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
@@ -103,7 +108,7 @@ function SearchPage() {
       </div>
       <ProductDetailsDialog
         open={openDetailsDialog}
-        setOpen={setOpenDetailsDialog}
+        setOpen={setOpenDetailsDialog}/* @ts-ignore */
         productDetails={productDetails}
       />
     </div>

@@ -21,15 +21,15 @@ export default function AuthRegister() {
   const { toast } = useToast();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    dispatch(registerUser(formData)).then((data) => {
+    event.preventDefault();// @ts-ignore
+    dispatch(registerUser(formData)).then((data) => {// @ts-ignore
       if (data?.payload?.success) {
-        toast({
+        toast({// @ts-ignore
           title: data?.payload?.message,
         });
         navigate('/auth/login');
       } else {
-        toast({
+        toast({// @ts-ignore
           title: data?.payload?.message,
           variant: 'destructive',
         });

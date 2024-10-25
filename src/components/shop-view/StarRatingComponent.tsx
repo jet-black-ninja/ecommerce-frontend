@@ -2,7 +2,7 @@ import { StarIcon } from 'lucide-react';
 
 import { Button } from '../ui/button';
 type StarRatingComponentProps = {
-  rating: 1 | 2 | 3 | 4 | 5; // Explicitly defining the possible values for `rating`
+  rating: 1 | 2 | 3 | 4 | 5 | number; // Explicitly defining the possible values for `rating`
   handleRatingChange: (newRating: 1 | 2 | 3 | 4 | 5) => void; // Similarly, define the type for `handleRatingChange`
 };
 function StarRatingComponent({

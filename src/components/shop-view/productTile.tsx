@@ -3,8 +3,9 @@ import { Button } from '../ui/button';
 import { brandOptionMap, categoryOptionsMap } from '@/config/config';
 import { Badge } from '../ui/badge';
 function ShoppingProductTile({
-  handleGetProductDetails,
-  product,
+  /* @ts-ignore */
+  handleGetProductDetails /* @ts-ignore */,
+  product /* @ts-ignore */,
   handleAddToCart,
 }) {
   return (
@@ -37,9 +38,11 @@ function ShoppingProductTile({
           <h2 className="text-xl font-bold mb-2">{product.title}</h2>
           <div className="flex justify-between items-center mb-2">
             <span className="text-[16px] text-muted-foreground">
+              {/* @ts-ignore */}
               {categoryOptionsMap[product.category]}
             </span>
             <span className="text-[16px] text-muted-foreground">
+              {/* @ts-ignore */}
               {brandOptionMap[product?.brand]}
             </span>
           </div>

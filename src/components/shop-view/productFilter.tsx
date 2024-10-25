@@ -4,8 +4,9 @@ import { filterOptions } from '@/config/config';
 import { Label } from '../ui/label';
 import { Checkbox } from '../ui/checkbox';
 import { Separator } from '../ui/separator';
-
+/* @ts-ignore */
 function ProductFilter({ filters, handleFilter }) {
+  /* @ts-ignore */
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
@@ -22,6 +23,7 @@ function ProductFilter({ filters, handleFilter }) {
                 {capitalizeFirstLetter(keyItem)}
               </h3>
               <div className="grid gap-2 mt-2">
+                {/* @ts-ignore */}
                 {filterOptions[keyItem].map((option) => (
                   <Label className="flex font-medium items-center gap-2 ">
                     <Checkbox

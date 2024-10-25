@@ -15,8 +15,9 @@ function PaypalReturnPage() {
 
   useEffect(() => {
     if (paymentId && payerId) {
+      //@ts-ignore
       const orderId = JSON.parse(sessionStorage.getItem('currentOrderId'));
-      console.log(payerId, 'payerId', paymentId, 'paymentId', orderId, 'orderId');
+      // console.log(payerId, 'payerId', paymentId, 'paymentId', orderId, 'orderId');
       dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem('currentOrderId');

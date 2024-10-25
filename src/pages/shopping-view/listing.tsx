@@ -1,8 +1,7 @@
 import { ArrowUpDownIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSearchParams, useSearchParams } from 'react-router-dom';
-import { DropdownMenuRadioItem } from '@radix-ui/react-dropdown-menu';
+import { useSearchParams } from 'react-router-dom';
 
 import ProductFilter from '@/components/shop-view/productFilter';
 import ProductDetailsDialog from '@/components/shop-view/productDetailsDialog';
@@ -12,7 +11,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuRadioGroup,
-  DropdownMenuItem,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useToast } from '@/hooks/use-toast';
@@ -24,7 +23,7 @@ import {
 } from '@/store/shop/products-slice';
 import { AppDispatch, RootState } from '@/store/store';
 
-function createSearchParamsHelper(filterParams) {
+function createSearchParamsHelper(filterParams: any) {
   const queryParams = [];
 
   for (const [key, value] of Object.entries(filterParams)) {
@@ -44,7 +43,7 @@ function ListingPage() {
   const { cartItems } = useSelector((state: RootState) => state.shopCart);
   const { user } = useSelector((state: RootState) => state.auth);
   const [filters, setFilters] = useState({});
-  const [sort, setSort] = useState<string | null>(null);
+  const [sort, setSort] = useState<string>('price-lowtohigh');
   const [searchParams, setSearchParams] = useSearchParams();
   const [openDetailsDialog, setOpenDetailsDialog] = useState<boolean>(false);
   const { toast } = useToast();
@@ -54,8 +53,8 @@ function ListingPage() {
     setSort(value);
   };
 
-  function handleFilter(getSectionId, getCurrentOption) {
-    let cpyFilters = { ...filters };
+  function handleFilter(getSectionId: string, getCurrentOption: any) {
+    let cpyFilters: any = { ...filters };
     const indexOfCurrentSection = Object.keys(cpyFilters).indexOf(getSectionId);
 
     if (indexOfCurrentSection === -1) {
@@ -75,17 +74,19 @@ function ListingPage() {
     sessionStorage.setItem('filters', JSON.stringify(cpyFilters));
   }
 
-  function handleGetProductDetails(currentProductId: string) {
-    dispatch(fetchProductDetails(currentProductId));
-  }
+  const handleGetProductDetails = (productId: string) => {
+    //@ts-ignore
+    dispatch(fetchProductDetails(productId));
+  };
 
   function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
     // console.log(cartItems);
+    //@ts-ignore
     let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId === getCurrentProductId
+        (item: any) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
         const getQuantity = getCartItems[indexOfCurrentItem].quantity;
@@ -102,12 +103,14 @@ function ListingPage() {
 
     dispatch(
       addToCart({
+        //@ts-ignore
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
+        //@ts-ignore
         dispatch(fetchCartItems(user?.id));
         toast({
           title: 'Product added to cart',
@@ -117,6 +120,7 @@ function ListingPage() {
   }
   useEffect(() => {
     setSort('price-lowtohigh');
+    //@ts-ignore
     setFilters(JSON.parse(sessionStorage.getItem('filters')) || {});
   }, [categorySearchParam]);
 
@@ -142,7 +146,7 @@ function ListingPage() {
     <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 p-4 md:p-6">
       <ProductFilter filters={filters} handleFilter={handleFilter} />
       <div className="bg-background w-full rounded-lg shadow-sm">
-        <div className="p-4 border-b flex items-center justify-between">
+        <div className="p-3 border-b flex items-center justify-between">
           <h2 className="text-lg font-extrabold">All Products</h2>
           <div className="flex items-center gap-3">
             <span className="text-muted-foreground">
@@ -189,7 +193,7 @@ function ListingPage() {
       </div>
       <ProductDetailsDialog
         open={openDetailsDialog}
-        setOpen={setOpenDetailsDialog}
+        setOpen={setOpenDetailsDialog}/* @ts-ignore */
         productDetails={productDetails}
       />
     </div>

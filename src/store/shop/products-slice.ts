@@ -9,7 +9,7 @@ const initialState = {
 const serverURL = import.meta.env.VITE_SERVER_URL;
 export const fetchAllFilteredProducts = createAsyncThunk(
   '/products/fetchAllProducts',
-  async ({filterParams, sortParams}) => {
+  async ({ filterParams, sortParams }: { filterParams: any;  sortParams: any}) => {
     const query = new URLSearchParams({
       ...filterParams,
       sortBy: sortParams,

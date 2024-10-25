@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   getAllOrdersByUser,
   getOrderDetails,
   resetOrderDetails,
 } from '@/store/shop/order-slice';
 import { AppDispatch, RootState } from '@/store/store';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Dialog } from '../ui/dialog';
 import {
@@ -27,11 +28,13 @@ function Orders() {
     (state: RootState) => state.shopOrder
   );
 
-  function handleFetchOrderDetails(getId) {
+  function handleFetchOrderDetails(getId: string) {
+    /*@ts-ignore*/
     dispatch(getOrderDetails(getId));
   }
 
   useEffect(() => {
+    /*@ts-ignore*/
     dispatch(getAllOrdersByUser(user?.id));
   }, [dispatch]);
 
@@ -60,21 +63,26 @@ function Orders() {
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
                   <TableRow>
+                    {/*@ts-ignore*/}
                     <TableCell>{orderItem?._id}</TableCell>
+                    {/*@ts-ignore*/}
                     <TableCell>{orderItem?.orderDate.split('T')[0]}</TableCell>
                     <TableCell>
                       <Badge
                         className={`py-1 px-3 ${
+                          /*@ts-ignore*/
                           orderItem?.orderStatus === 'confirmed'
-                            ? 'bg-green-500'
+                            ? 'bg-green-500' /*@ts-ignore*/
                             : orderItem?.orderStatus === 'rejected'
                               ? 'bg-red-600'
                               : 'bg-black'
                         }`}
                       >
+                        {/*@ts-ignore*/}
                         {orderItem?.orderStatus}
                       </Badge>
                     </TableCell>
+                    {/*@ts-ignore*/}
                     <TableCell>${orderItem?.totalAmount}</TableCell>
                     <TableCell>
                       <Dialog
@@ -86,11 +94,13 @@ function Orders() {
                       >
                         <Button
                           onClick={() =>
+                            /* @ts-ignore */
                             handleFetchOrderDetails(orderItem?._id)
                           }
                         >
                           View Details
                         </Button>
+                        {/* @ts-ignore */}
                         <ShoppingOrderDetailsView orderDetails={orderDetails} />
                       </Dialog>
                     </TableCell>

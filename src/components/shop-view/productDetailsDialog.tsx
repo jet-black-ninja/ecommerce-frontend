@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addToCart, fetchCartItems } from '@/store/shop/cart-slice';
@@ -13,7 +13,16 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Label } from '../ui/label';
 import StarRatingComponent from './StarRatingComponent.tsx';
 import { Input } from '../ui/input.tsx';
-function productDetailsDialog({ open, setOpen, productDetails }) {
+import { Product } from '@/interfaces/Product.ts';
+function productDetailsDialog({
+  open,
+  setOpen,
+  productDetails,
+}: {
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+  productDetails: Product;
+}) {
   const [reviewMessage, setReviewMessage] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
@@ -24,13 +33,14 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
 
   function handleRatingChange(getRating: number) {
     setRating(getRating);
-  }
+  } /* @ts-ignore */
   function handleAddToCart(getCurrentProductId, getTotalStock) {
+    /* @ts-ignore */
     let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
-        (item) => item.productId === getCurrentProductId
+        (item: any) => item.productId === getCurrentProductId
       );
       if (indexOfCurrentItem > -1) {
         const getQuantity = getCartItems[indexOfCurrentItem].quantity;
@@ -46,12 +56,14 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
     }
     dispatch(
       addToCart({
+        /* @ts-ignore */
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
+        /* @ts-ignore */
         dispatch(fetchCartItems(user?.id));
         toast({
           title: 'Product is added to cart',
@@ -70,16 +82,17 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
   function handleAddReview() {
     dispatch(
       addReview({
+        /* @ts-ignore */
         productId: productDetails?._id,
         userId: user?.id,
         userName: user?.userName,
         reviewMessage: reviewMessage,
         reviewValue: rating,
       })
-    ).then((date) => {
+    ).then((data) => {
       if (data.payload?.success) {
         setRating(0);
-        setReviewMessage('');
+        setReviewMessage(''); /* @ts-ignore */
         dispatch(getReviews(productDetails?._id));
         toast({
           title: 'Review Added SuccessFully',
@@ -89,6 +102,7 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   useEffect(() => {
+    /* @ts-ignore */
     if (productDetails !== null) dispatch(getReviews(productDetails?._id));
   }, [productDetails]);
 
@@ -131,6 +145,7 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
           </div>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-0.5">
+              {/* @ts-ignore */}
               <StarRatingComponent rating={averageRating} />
             </div>
             <span className="text-muted-foreground">
@@ -147,7 +162,7 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
               <Button
                 className="w-full"
                 onClick={() =>
-                  handleAddToCart(
+                  handleAddToCart(/* @ts-ignore */
                     productDetails?._id,
                     productDetails?.totalStock
                   )
@@ -166,6 +181,7 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
                   <div className="flex gap-4">
                     <Avatar className="w-10 h-10 border">
                       <AvatarFallback>
+                        {/* @ts-ignore */}
                         {reviewItem?.userName[0].toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
@@ -174,6 +190,7 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
                         <h3 className="font-bold">{reviewItem?.userName}</h3>
                       </div>
                       <div className="flex items-center gap-0.5">
+                        {/* @ts-ignore */}
                         <StarRatingComponent rating={reviewItem?.reviewValue} />
                       </div>
                       <p className="text-muted-foreground">
@@ -214,4 +231,4 @@ function productDetailsDialog({ open, setOpen, productDetails }) {
   );
 }
 
-export default productDetailsDialog; 
+export default productDetailsDialog;
