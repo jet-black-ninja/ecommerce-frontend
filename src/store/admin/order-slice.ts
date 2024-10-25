@@ -29,11 +29,10 @@ export const getOrderDetailsForAdmin = createAsyncThunk(
 export const updateOrderStatus = createAsyncThunk(
   '/order/updateOrderStatus',
   async ({ id, orderStatus }) => {
+    console.log('updateOrderStatus', id, orderStatus);
     const response = await axios.put(
       `${serverURL}/api/admin/orders/update/${id}`,
-      {
-        orderStatus,
-      }
+      { orderStatus }
     );
     return response.data;
   }

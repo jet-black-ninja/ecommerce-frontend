@@ -12,7 +12,7 @@ interface Props {
   imageFile: File | null;
   setImageFile: Dispatch<SetStateAction<File | null>>;
   imageLoadingState: boolean;
-  uploadedImageUrl: string | null;
+  uploadedImageUrl?: string | null;
   setUploadedImageUrl: Dispatch<SetStateAction<string | null>>;
   setImageLoadingState: Dispatch<SetStateAction<boolean>>;
   isEditMode: boolean;

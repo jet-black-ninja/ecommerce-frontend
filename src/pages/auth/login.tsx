@@ -1,9 +1,10 @@
-import { useToast } from '@/hooks/use-toast';
 import { FormEvent, useState } from 'react';
-import { loginFormControls } from '@/config/config';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '@/store/auth-slice';
 import { Link } from 'react-router-dom';
+
+import { useToast } from '@/hooks/use-toast';
+import { loginFormControls } from '@/config/config';
+import { loginUser } from '@/store/auth-slice';
 import CommonForm from '@/components/common/form';
 import { AppDispatch } from '@/store/store';
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CommonForm from '../common/form';
@@ -25,13 +25,14 @@ function AdminOrderDetailsView({ orderDetails }) {
   const { toast } = useToast();
 
   // console.log(orderDetails, 'order Details');
-  console.log(formData);
-  function handleUpdateStatus(event) {
+  // console.log(formData);
+
+  function handleUpdateStatus(event:FormEvent<HTMLElement>) {
     event.preventDefault();
     const { status } = formData;
-
+    // console.log(status);
     dispatch(
-      updateOrderStatus({ id: orderDetails?._id, orderDetails: status })
+      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
     ).then((data) => {
       dispatch(getOrderDetailsForAdmin(orderDetails?._id));
       dispatch(getAllOrdersForAdmin());

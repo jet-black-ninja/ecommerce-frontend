@@ -11,11 +11,12 @@ function PaypalReturnPage() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const paymentId = params.get('paymentId');
-  const payerId = params.get('payerId');
+  const payerId = params.get('PayerId');
 
   useEffect(() => {
     if (paymentId && payerId) {
       const orderId = JSON.parse(sessionStorage.getItem('currentOrderId'));
+      console.log(payerId, 'payerId', paymentId, 'paymentId', orderId, 'orderId');
       dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
         if (data?.payload?.success) {
           sessionStorage.removeItem('currentOrderId');
@@ -24,6 +25,7 @@ function PaypalReturnPage() {
       });
     }
   }, [paymentId, payerId, dispatch]);
+
   return (
     <Card>
       <CardHeader>

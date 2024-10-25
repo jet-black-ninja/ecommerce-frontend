@@ -19,8 +19,8 @@ import Homepage from './pages/shopping-view/shopHome';
 import ListingPage from './pages/shopping-view/listing';
 import CheckoutPage from './pages/shopping-view/checkout';
 import AccountPage from './pages/shopping-view/account';
-import PaypalReturnPage from './pages/shopping-view/paypalReturn'
-import PaypalSuccessPage from './pages/shopping-view/paypalSucccess'
+import PaypalReturnPage from './pages/shopping-view/paypalReturn';
+import PaypalSuccessPage from './pages/shopping-view/paypalSucccess';
 import SearchPage from './pages/shopping-view/search';
 import { RootState, AppDispatch } from './store/store';
 function App() {
@@ -77,12 +77,13 @@ function App() {
             </CheckAuth>
           }
         >
+          {/* <Route path="/shop" element={<ShoppingLayout />}> */}
           <Route path="home" element={<Homepage />} />
           <Route path="listing" element={<ListingPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
-          <Route path ="paypal-success" element = {<PaypalSuccessPage/>}/>
+          <Route path="paypal-success" element={<PaypalSuccessPage />} />
           <Route path="search" element={<SearchPage />} />
         </Route>
         <Route path="/unauth-page" element={<NotAuthPage />} />

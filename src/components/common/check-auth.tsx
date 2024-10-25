@@ -7,7 +7,12 @@ interface Props {
 function CheckAuth({ isAuthenticated, user, children }: Props) {
   const location = useLocation();
   // console.log(location.pathname, isAuthenticated);
-
+  if (
+    location.pathname.includes('/shop/paypal-return') ||
+    location.pathname.includes('/shop/paypal-success')
+  ) {
+    return <>{children}</>;
+  }
   if (location.pathname === '/') {
     if (!isAuthenticated) {
       return <Navigate to="/auth/login" />;
@@ -38,7 +43,7 @@ function CheckAuth({ isAuthenticated, user, children }: Props) {
     if (user?.role === 'admin') {
       return <Navigate to="/admin/dashboard" />;
     } else {
-      return <Navigate to="/shop/home" />;
+      return <Navigate to="/shop/home/" />;
     }
   }
   if (
