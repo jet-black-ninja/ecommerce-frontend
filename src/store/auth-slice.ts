@@ -27,12 +27,14 @@ const initialState: AuthState = {
   user: null,
 };
 
-const serverURL = import.meta.env.VITE_SERVER_URL || 'http://localhost:5000';
+const serverURL = import.meta.env.VITE_SERVER_URL;
+console.log(serverURL);
 export const registerUser = createAsyncThunk(
   'auth/register',
   async (formData: { username: string; email: string; password: string }) => {
     const response = await axios.post<AuthResponse>(
-      `${serverURL}/api/auth/register`,
+      `
+      ${serverURL}/api/auth/register`,
       formData,
       {
         withCredentials: true,
