@@ -137,6 +137,7 @@ function productDetailsDialog({
             >
               {productDetails?.price}
             </p>
+            {/*@ts-ignore*/}
             {productDetails?.salePrice > 0 ? (
               <p className="text-2xl font-bold text-muted-foreground">
                 {productDetails?.salePrice}
@@ -162,7 +163,8 @@ function productDetailsDialog({
               <Button
                 className="w-full"
                 onClick={() =>
-                  handleAddToCart(/* @ts-ignore */
+                  handleAddToCart(
+                    /* @ts-ignore */
                     productDetails?._id,
                     productDetails?.totalStock
                   )

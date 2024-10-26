@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { Cart, CartItem } from '@/interfaces/Cart';
+import { Cart } from '@/interfaces/Cart';
 
 interface IState {
   cartItems: Cart[];
