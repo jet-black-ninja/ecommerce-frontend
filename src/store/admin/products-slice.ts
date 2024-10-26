@@ -14,7 +14,7 @@ const serverURL = import.meta.env.VITE_SERVER_URL;
 
 export const addNewProduct = createAsyncThunk(
   '/products/addNewProduct',
-  async (formData) => {
+  async (formData:any) => {
     const response = await axios.post(
       `${serverURL}/api/admin/products/add`,
       formData,

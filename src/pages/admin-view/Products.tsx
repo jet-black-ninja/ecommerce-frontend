@@ -75,7 +75,7 @@ function AdminProducts() {
         }
       });
     } else {
-      // @ts-ignore
+      
       dispatch(addNewProduct({ ...formData, image: uploadedImageUrl })).then(
         (data) => {
           if (data?.payload?.success) {

@@ -53,7 +53,7 @@ function CheckoutPage() {
     }
 
     const orderData: Order = {
-      //@ts-ignore
+      
       userId: user?.id,
       //@ts-ignore
       cartId: cartItems?._id,
@@ -86,7 +86,7 @@ function CheckoutPage() {
       paymentId: '',
       payerId: '',
     };
-    //@ts-ignore
+    
     dispatch(createNewOrder(orderData)).then((data) => {
       // console.log(data, 'order finish data');
       if (data?.payload?.success) {
@@ -114,7 +114,7 @@ function CheckoutPage() {
           {/*@ts-ignore*/}
           {cartItems && cartItems.items && cartItems.items.length > 0
             /*@ts-ignore*/
-            ? cartItems.items.map((item: CartItem) => (//@ts-ignore
+            ? cartItems.items.map((item: CartItem) => (
                 <UserCartItemContent cartItem={item} />
               ))
             : null}

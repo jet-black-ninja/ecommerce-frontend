@@ -19,7 +19,7 @@ const initialFormData = {
   status: '',
 };
 
-function AdminOrderDetailsView(orderDetails: Order | any) {
+function AdminOrderDetailsView({ orderDetails }: Order | any) {
   const [formData, setFormData] = useState(initialFormData);
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +33,6 @@ function AdminOrderDetailsView(orderDetails: Order | any) {
     const { status } = formData;
     // console.log(status);
     dispatch(
-      
       updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
     ).then((data) => {
       dispatch(getOrderDetailsForAdmin(orderDetails?._id));
@@ -58,7 +57,7 @@ function AdminOrderDetailsView(orderDetails: Order | any) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails.orderDate.toISOString().split('T')[0]}</Label>
+            <Label>{orderDetails.orderDate.split('T')[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order price</p>

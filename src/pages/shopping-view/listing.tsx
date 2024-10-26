@@ -40,7 +40,9 @@ function ListingPage() {
   const { productList, productDetails } = useSelector(
     (state: RootState) => state.shopProduct
   );
-  const { cartItems } = useSelector((state: RootState) => state.shopCart);
+  const { cartItems = { items: [] } } = useSelector(
+    (state: RootState) => state.shopCart
+  );
   const { user } = useSelector((state: RootState) => state.auth);
   const [filters, setFilters] = useState({});
   const [sort, setSort] = useState<string>('price-lowtohigh');
@@ -75,14 +77,13 @@ function ListingPage() {
   }
 
   const handleGetProductDetails = (productId: string) => {
-    //@ts-ignore
     dispatch(fetchProductDetails(productId));
   };
 
   function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
     // console.log(cartItems);
     //@ts-ignore
-    let getCartItems = cartItems.items || [];
+    let getCartItems = cartItems.items;
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(
@@ -103,14 +104,12 @@ function ListingPage() {
 
     dispatch(
       addToCart({
-        //@ts-ignore
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
-        //@ts-ignore
         dispatch(fetchCartItems(user?.id));
         toast({
           title: 'Product added to cart',
@@ -120,8 +119,11 @@ function ListingPage() {
   }
   useEffect(() => {
     setSort('price-lowtohigh');
-    //@ts-ignore
-    setFilters(JSON.parse(sessionStorage.getItem('filters')) || {});
+
+    const filtersFromStorage = sessionStorage.getItem('filters');
+    if (filtersFromStorage) {
+      setFilters(JSON.parse(filtersFromStorage));
+    }
   }, [categorySearchParam]);
 
   useEffect(() => {

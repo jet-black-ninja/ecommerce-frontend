@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialState = {
+import { Cart, CartItem } from '@/interfaces/Cart';
+
+interface IState {
+  cartItems: Cart[];
+  isLoading: boolean;
+}
+const initialState: IState = {
   cartItems: [],
   isLoading: false,
 };
@@ -15,9 +21,9 @@ export const addToCart = createAsyncThunk(
     productId,
     quantity,
   }: {
-    userId: string;
+    userId: string | undefined;
     productId: string;
-    quantity: number;
+    quantity: Number;
   }) => {
     const response = await axios.post(`${serverURL}/api/shop/cart/add`, {
       userId,
@@ -31,7 +37,7 @@ export const addToCart = createAsyncThunk(
 
 export const fetchCartItems = createAsyncThunk(
   'cart/fetchCartItems',
-  async (userId) => {
+  async (userId: string | undefined) => {
     const response = await axios.get(
       `${serverURL}/api/shop/cart/get/${userId}`
     );

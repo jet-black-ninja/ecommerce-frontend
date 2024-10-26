@@ -21,7 +21,7 @@ function productDetailsDialog({
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  productDetails: Product;
+  productDetails: Product | null;
 }) {
   const [reviewMessage, setReviewMessage] = useState<string>('');
   const [rating, setRating] = useState<number>(0);

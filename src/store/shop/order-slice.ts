@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-interface Order {}
+import { Order } from '@/interfaces/Order';
+
 interface OrderDetails {}
 interface OrderState {
   approvalURL: string | null;
@@ -21,7 +22,7 @@ const serverURL = import.meta.env.VITE_SERVER_URL;
 
 export const createNewOrder = createAsyncThunk(
   '/order/createNewOrder',
-  async (orderData) => {
+  async (orderData: Order) => {
     const response = await axios.post(
       `${serverURL}/api/shop/order/create`,
       orderData
@@ -64,7 +65,9 @@ export const getAllOrdersByUser = createAsyncThunk(
 export const getOrderDetails = createAsyncThunk(
   '/order/getOrderDetails',
   async (orderId) => {
-    const response = await axios.get(`${serverURL}/api/shop/order/details/${orderId}`);
+    const response = await axios.get(
+      `${serverURL}/api/shop/order/details/${orderId}`
+    );
     return response.data;
   }
 );
@@ -86,10 +89,7 @@ const shoppingOrderSlice = createSlice({
         state.isLoading = false;
         state.approvalURL = action.payload.approvalURL;
         state.orderId = action.payload.orderId;
-        sessionStorage.setItem(
-          'currentOrderId',
-          JSON.stringify(action.payload.orderId)
-        );
+        sessionStorage.setItem('currentOrderId', action.payload.orderId);
       })
       .addCase(createNewOrder.rejected, (state) => {
         state.isLoading = false;

@@ -66,7 +66,9 @@ function MenuItems() {
 
 function HeaderRightContent() {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { cartItems } = useSelector((state: RootState) => state.shopCart);
+  const { cartItems = { items: [] } } = useSelector(
+    (state: RootState) => state.shopCart
+  );
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -74,7 +76,6 @@ function HeaderRightContent() {
     dispatch(logoutUser());
   }
   useEffect(() => {
-    /*@ts-ignore*/
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
   // console.log(cartItems, 'sachin');
@@ -97,10 +98,7 @@ function HeaderRightContent() {
         <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
-            /*@ts-ignore*/
-            cartItems &&/*@ts-ignore*/
-            cartItems?.items &&/*@ts-ignore*/
-            cartItems?.items.length > 0 /*@ts-ignore*/
+            cartItems && cartItems?.items && cartItems?.items.length > 0
               ? cartItems.items
               : []
           }

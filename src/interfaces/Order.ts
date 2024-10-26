@@ -3,7 +3,7 @@ import { CartItem } from './Cart';
 
 export type Order = {
   _id: string;
-  userId: string;
+  userId: string | undefined;
   cartId: string;
   cartItems: CartItem[];
   addressInfo: Address;

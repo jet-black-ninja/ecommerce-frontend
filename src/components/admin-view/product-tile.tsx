@@ -8,16 +8,15 @@ interface IAdminProductTile {
   product: Product;
   setFormData: Dispatch<SetStateAction<any>>;
   setOpenCreateProductDialog: Dispatch<SetStateAction<boolean>>;
-  setCurrentEditedId: Dispatch<SetStateAction<string |  null>>;
+  setCurrentEditedId: Dispatch<SetStateAction<string | null>>;
   handleDelete: (productId: string) => void;
 }
 function AdminProductTile({
-  /**/
-  product /**/,
-  setFormData /**/,
-  setOpenCreateProductDialog /**/,
-  setCurrentEditedId /**/,
-  handleDelete /**/,
+  product,
+  setFormData,
+  setOpenCreateProductDialog,
+  setCurrentEditedId,
+  handleDelete,
 }: IAdminProductTile) {
   return (
     <Card className="w-full max-w-sm mx-auto">

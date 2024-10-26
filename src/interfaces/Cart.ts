@@ -1,3 +1,4 @@
+
 export type CartItem = {
   _id: string;
   productId: string;
@@ -8,6 +9,7 @@ export type CartItem = {
   salePrice: number;
 };
 export type Cart = {
+  _id: string;
   userId: string;
   items: CartItem[];
 };

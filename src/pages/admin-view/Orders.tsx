@@ -20,6 +20,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { AppDispatch, RootState } from '@/store/store';
 import AdminOrderDetailsView from '@/components/admin-view/order-details';
+import { Order } from '@/interfaces/Order';
 
 //TODO add types as well as check if it works after adding dummy orders
 
@@ -61,7 +62,7 @@ function AdminOrders() {
           </TableHeader>
           <TableBody>
             {orderList && orderList.length > 0 ? (
-              orderList.map((orderItem) => (
+              orderList.map((orderItem:Order) => (
                 <TableRow>
                   <TableCell>{orderItem?._id}</TableCell>{/* @ts-ignore*/}
                   <TableCell>{orderItem?.orderDate.split('T')[0]}</TableCell>

@@ -16,8 +16,7 @@ function AdminDashboard() {
 
   function handleUploadFeatureImage() {
     
-    dispatch(addFeatureImage(uploadedImageUrl)).then((data) => {
-      //@ts-ignore
+    dispatch(addFeatureImage(uploadedImageUrl)).then((data:any) => {
       if (data?.payload.success) {
         dispatch(getFeatureImages());
         setImageFile(null);

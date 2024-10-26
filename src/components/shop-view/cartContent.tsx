@@ -9,7 +9,7 @@ import { CartItem } from '@/interfaces/Cart';
 import { Product } from '@/interfaces/Product';
 
 //TODO fix types
-function UserCartItemContent(cartItem: CartItem | any) {
+function UserCartItemContent({ cartItem }:{cartItem:CartItem}) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { cartItems = { items: [] } } = useSelector(
     (state: RootState) => state.shopCart

@@ -1,12 +1,13 @@
-import { Product } from '@/interfaces/Product';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+
+import { Product } from '@/interfaces/Product';
 interface IState {
   isLoading: boolean;
   productList: Product[];
   productDetails: Product | null;
 }
-const initialState:IState = {
+const initialState: IState = {
   isLoading: false,
   productList: [],
   productDetails: null,
@@ -14,7 +15,13 @@ const initialState:IState = {
 const serverURL = import.meta.env.VITE_SERVER_URL;
 export const fetchAllFilteredProducts = createAsyncThunk(
   '/products/fetchAllProducts',
-  async ({ filterParams, sortParams }: { filterParams: any;  sortParams: any}) => {
+  async ({
+    filterParams,
+    sortParams,
+  }: {
+    filterParams: any;
+    sortParams: any;
+  }) => {
     const query = new URLSearchParams({
       ...filterParams,
       sortBy: sortParams,
@@ -29,7 +36,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
 
 export const fetchProductDetails = createAsyncThunk(
   '/products/fetchProductDetails',
-  async (id) => {
+  async (id: string) => {
     const result = await axios.get(`${serverURL}/api/shop/products/get/${id}`);
 
     return result?.data;

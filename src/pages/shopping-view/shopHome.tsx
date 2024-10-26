@@ -59,7 +59,7 @@ function ShoppingHome() {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  function handleNavigationToListingPage(getCurrentItem:any, section:any) {
+  function handleNavigationToListingPage(getCurrentItem: any, section: any) {
     sessionStorage.removeItem('filters');
     const currentFilter = {
       [section]: [getCurrentItem.id],
@@ -69,21 +69,18 @@ function ShoppingHome() {
   }
 
   function handleGetProductDetails(getCurrentProductId: string) {
-    //@ts-ignore
     dispatch(fetchProductDetails(getCurrentProductId));
   }
 
-  function handleAddToCart(getCurrentProductId:string) {
+  function handleAddToCart(getCurrentProductId: string) {
     dispatch(
       addToCart({
-        //@ts-ignore
         userId: user?.id,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
-        //@ts-ignore
         dispatch(fetchCartItems(user?.id));
         toast({
           title: 'Product Added To Cart',
@@ -118,9 +115,7 @@ function ShoppingHome() {
       <div className="relative w-full h-[600px] overflow-hidden">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
-            
-            <img
-              //@ts-ignore
+              <img
                 src={slide?.image}
                 key={index}
                 className={`${index === currentSlide ? 'opacity-100' : 'opacity-0'}
@@ -217,7 +212,7 @@ function ShoppingHome() {
       </section>
       <ProductDetailsDialog
         open={openDetailsDialog}
-        setOpen={setOpenDetailsDialog}/* @ts-ignore */
+        setOpen={setOpenDetailsDialog}
         productDetails={productDetails}
       />
     </div>

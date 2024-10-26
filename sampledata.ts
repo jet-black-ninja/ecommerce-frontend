@@ -189,7 +189,7 @@ const products: Product[] = [
   {
     image: 'hm-sunglasses.jpg',
     title: 'H&M Sunglasses',
-    description: 'Stylish polarized sunglasses offering UV protection and a sleek design.',
+    description: 'H&M Sunglasses',
     category: 'accessories',
     brand: 'h&m',
     price: 40,

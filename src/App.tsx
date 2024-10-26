@@ -83,7 +83,7 @@ function App() {
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
-          <Route path="paypal-success" element={<PaypalSuccessPage />} />
+          <Route path="payment-success" element={<PaypalSuccessPage />} />
           <Route path="search" element={<SearchPage />} />
         </Route>
         <Route path="/unauth-page" element={<NotAuthPage />} />

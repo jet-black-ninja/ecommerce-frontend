@@ -11,12 +11,19 @@ function PaypalReturnPage() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const paymentId = params.get('paymentId');
-  const payerId = params.get('PayerId');
+  const payerId = params.get('PayerID');
 
   useEffect(() => {
+    
     if (paymentId && payerId) {
-      //@ts-ignore
-      const orderId = JSON.parse(sessionStorage.getItem('currentOrderId'));
+      // console.log('working')
+      const orderId = sessionStorage.getItem('currentOrderId') || 'null';
+      console.log('i was here', payerId, paymentId,"order", orderId)
+      
+      if (!orderId) {
+        console.error('No order ID found in session storage');
+        return;
+      }
       // console.log(payerId, 'payerId', paymentId, 'paymentId', orderId, 'orderId');
       dispatch(capturePayment({ paymentId, payerId, orderId })).then((data) => {
         if (data?.payload?.success) {

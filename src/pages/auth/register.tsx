@@ -8,8 +8,13 @@ import { registerFormControls } from '../../config/config';
 import { registerUser } from '@/store/auth-slice';
 import { AppDispatch } from '@/store/store';
 
-const initialState = {
-  userName: '',
+interface IState {
+  username: string;
+  email: string;
+  password: string;
+}
+const initialState:IState = {
+  username: '',
   email: '',
   password: '',
 };
@@ -21,15 +26,15 @@ export default function AuthRegister() {
   const { toast } = useToast();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();// @ts-ignore
-    dispatch(registerUser(formData)).then((data) => {// @ts-ignore
+    event.preventDefault();
+    dispatch(registerUser(formData)).then((data:any) => {
       if (data?.payload?.success) {
-        toast({// @ts-ignore
+        toast({
           title: data?.payload?.message,
         });
         navigate('/auth/login');
       } else {
-        toast({// @ts-ignore
+        toast({
           title: data?.payload?.message,
           variant: 'destructive',
         });
