@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { addFeatureImage, getFeatureImages } from '@/store/common-slice';
 import { AppDispatch, RootState } from '@/store/store';
 function AdminDashboard() {
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -15,10 +15,10 @@ function AdminDashboard() {
   // console.log(uploadedImageUrl, 'uploadedImageUrl');
 
   function handleUploadFeatureImage() {
-    // @ts-ignore
+    
     dispatch(addFeatureImage(uploadedImageUrl)).then((data) => {
-      // @ts-ignore
-      if (data?.payload?.success) {
+      //@ts-ignore
+      if (data?.payload.success) {
         dispatch(getFeatureImages());
         setImageFile(null);
         setUploadedImageUrl('');
@@ -35,7 +35,7 @@ function AdminDashboard() {
   return (
     <div>
       <ProductImageUpload
-        imageFile={imageFile} // @ts-ignore
+        imageFile={imageFile}
         setImageFile={setImageFile}
         setUploadedImageUrl={setUploadedImageUrl}
         setImageLoadingState={setImageLoadingState}
@@ -49,10 +49,8 @@ function AdminDashboard() {
       <div className="flex flex-col gap-4 mt-5">
         {featureImageList && featureImageList.length > 0 ? (
           featureImageList.map((featureImgItem) => (
-            // @ts-ignore
             <div className="relative" key={featureImgItem._id}>
               <img
-                // @ts-ignore
                 src={featureImgItem.image}
                 className="w-full h-[300px] object-cover rounded-t-lg"
               />

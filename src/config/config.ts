@@ -1,3 +1,12 @@
+export interface IFormControl {
+  id?: string;
+  name: string;
+  label: string;
+  placeholder?: string;
+  componentType: 'input' | 'textarea' | 'select' | string;
+  type?: string;
+  options?: { id: string; label: string }[];
+}
 export const registerFormControls = [
   {
     name: 'userName',
@@ -27,14 +36,14 @@ export const loginFormControls = [
     name: 'email',
     label: 'Email',
     placeholder: 'Enter Your Email',
-    component: 'input',
+    componentType: 'input',
     type: 'email',
   },
   {
     name: 'password',
     label: 'Password',
     placeholder: 'Enter Your Password',
-    component: 'input',
+    componentType: 'input',
     type: 'password',
   },
 ];
@@ -45,13 +54,13 @@ export const addProductFormElements = [
     name: 'title',
     componentType: 'input',
     type: 'text',
-    placeholderText: 'Enter Product Title',
+    placeholder: 'Enter Product Title',
   },
   {
     label: 'Description',
     name: 'description',
     componentType: 'textarea',
-    placeholderText: 'Enter Product Description',
+    placeholder: 'Enter Product Description',
   },
   {
     label: 'Category',
@@ -192,34 +201,33 @@ export const addressFormControls = [
     name: 'address',
     componentType: 'text',
     type: 'text',
-    placeholderText: 'Enter your address',
+    placeholder: 'Enter your address',
   },
   {
     label: 'City',
     name: 'city',
     componentType: 'text',
     type: 'text',
-    placeholderText: 'Enter your city',
+    placeholder: 'Enter your city',
   },
   {
     label: 'Pincode',
     name: 'pincode',
     componentType: 'text',
     type: 'text',
-    placeholderText: 'Enter your pincode',
+    placeholder: 'Enter your pincode',
   },
   {
     label: 'Phone',
-
     name: 'phone',
     componentType: 'text',
     type: 'text',
-    placeholderText: 'Enter your phone number',
+    placeholder: 'Enter your phone number',
   },
   {
     label: 'Notes',
     name: 'notes',
     componentType: 'textarea',
-    placeholderText: 'Enter any additional notes',
+    placeholder: 'Enter any additional notes',
   },
 ];

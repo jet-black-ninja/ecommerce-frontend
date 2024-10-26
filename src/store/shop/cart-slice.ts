@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-
 const initialState = {
   cartItems: [],
   isLoading: false,
@@ -43,7 +42,13 @@ export const fetchCartItems = createAsyncThunk(
 
 export const deleteCartItem = createAsyncThunk(
   'cart/deleteCartItem',
-  async ({ userId, productId }: { userId: string; productId: string }) => {
+  async ({
+    userId,
+    productId,
+  }: {
+    userId: string | undefined;
+    productId: string;
+  }) => {
     const response = await axios.delete(
       `${serverURL}/api/shop/cart/${userId}/${productId}`
     );
@@ -59,7 +64,7 @@ export const updateCartQuantity = createAsyncThunk(
     productId,
     quantity,
   }: {
-    userId: string;
+    userId: string | undefined;
     productId: string;
     quantity: number;
   }) => {

@@ -28,7 +28,7 @@ function ProductImageUpload({
   isEditMode,
   isCustomStyling = false,
 }: Props) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const serverURL = import.meta.env.VITE_SERVER_URL;
 
   function handleImageFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -48,15 +48,17 @@ function ProductImageUpload({
 
   function handleRemoveImage() {
     setImageFile(null);
-    if (inputRef.current) {// @ts-ignore
-      inputRef.current.value = null;
+    if (inputRef.current) {
+      inputRef.current.value = "";
     }
   }
 
   async function uploadImageToCloudinary() {
     setImageLoadingState(true);
-    const data = new FormData();// @ts-ignore
-    data.append('my-file', imageFile);
+    const data = new FormData();
+    if(imageFile!== null){
+      data.append('my-file', imageFile);
+    }
     try {
       const response = await axios.post(`${serverURL}/api/admin/products/upload-image`, data);
       if (response?.data?.success) {

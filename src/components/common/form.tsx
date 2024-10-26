@@ -1,3 +1,5 @@
+import { Dispatch, FormEvent, SetStateAction } from 'react';
+
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import {
@@ -9,18 +11,24 @@ import {
 } from '../ui/select';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
-
+import { IFormControl } from '@/config/config';
+interface ICommonForm {
+  formControls: IFormControl[];
+  formData: any;
+  setFormData: Dispatch<SetStateAction<any>>;
+  onSubmit: (event:FormEvent<HTMLFormElement>) => void;
+  buttonText: string;
+  isBtnDisabled?: boolean;
+}
 export default function CommonForm({
-  /*@ts-ignore*/
-  formControls /*@ts-ignore*/,
-  formData /*@ts-ignore*/,
-  setFormData /*@ts-ignore*/,
-  onSubmit /*@ts-ignore*/,
-  buttonText /*@ts-ignore*/,
+  formControls,
+  formData,
+  setFormData,
+  onSubmit,
+  buttonText,
   isBtnDisabled = false,
-}) {
-  /*@ts-ignore*/
-  function renderInputByComponentsType(getControlItem) {
+}: ICommonForm) {
+  function renderInputByComponentsType(getControlItem: IFormControl) {
     let element = null;
     const value = formData[getControlItem.name] || '';
 
@@ -46,7 +54,7 @@ export default function CommonForm({
         element = (
           <Textarea
             name={getControlItem.name}
-            placeholder={getControlItem.palceholder}
+            placeholder={getControlItem.placeholder}
             id={getControlItem.id}
             value={value}
             onChange={(event) =>
@@ -74,8 +82,7 @@ export default function CommonForm({
             </SelectTrigger>
             <SelectContent>
               {getControlItem.options && getControlItem.options.length > 0
-                ? /*@ts-ignore*/
-                  getControlItem.options.map((optionItem) => (
+                ? getControlItem.options.map((optionItem: any) => (
                     <SelectItem key={optionItem.id} value={optionItem.id}>
                       {optionItem.label}
                     </SelectItem>
@@ -109,8 +116,7 @@ export default function CommonForm({
   return (
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
-        {/*@ts-ignore*/}
-        {formControls.map((controlItem) => (
+        {formControls.map((controlItem: IFormControl) => (
           <div className="grid w-full gap-1.5" key={controlItem.name}>
             <Label className="mb-1">{controlItem.label}</Label>
             {renderInputByComponentsType(controlItem)}

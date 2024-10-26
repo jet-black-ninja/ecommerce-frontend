@@ -1,13 +1,24 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { Card, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
+import { Product } from '@/interfaces/Product';
+
+interface IAdminProductTile {
+  product: Product;
+  setFormData: Dispatch<SetStateAction<any>>;
+  setOpenCreateProductDialog: Dispatch<SetStateAction<boolean>>;
+  setCurrentEditedId: Dispatch<SetStateAction<string |  null>>;
+  handleDelete: (productId: string) => void;
+}
 function AdminProductTile({
-  /*@ts-ignore*/
-  product,/*@ts-ignore*/
-  setFormData,/*@ts-ignore*/
-  setOpenCreateProductDialog/*@ts-ignore*/,
-  setCurrentEditedId,/*@ts-ignore*/
-  handleDelete,/*@ts-ignore*/
-}) {
+  /**/
+  product /**/,
+  setFormData /**/,
+  setOpenCreateProductDialog /**/,
+  setCurrentEditedId /**/,
+  handleDelete /**/,
+}: IAdminProductTile) {
   return (
     <Card className="w-full max-w-sm mx-auto">
       <div>

@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface FeatureImage {
-  id: string;
-  url: string;
+  _id: string;
+  image: string;
 }
 
 interface CommonState {
@@ -29,7 +29,7 @@ export const getFeatureImages = createAsyncThunk(
 
 export const addFeatureImage = createAsyncThunk(
   'order/addFeatureImage',
-  async (image) => {
+  async (image: string | null) => {
     const response = await axios.post<{ data: FeatureImage }>(
       `${serverURL}/api/common/feature/add`,
       { image }

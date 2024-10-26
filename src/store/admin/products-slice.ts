@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = {
+import { Product } from '@/interfaces/Product';
+interface IState {
+  isLoading: boolean;
+  productList: Product[];
+}
+const initialState: IState = {
   isLoading: false,
   productList: [],
 };
@@ -50,7 +55,7 @@ export const editProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   '/product/deleteProduct',
-  async (id:string) => {
+  async (id: string) => {
     const response = await axios.delete(
       `${serverURL}/api/admin/products/delete/${id}`
     );

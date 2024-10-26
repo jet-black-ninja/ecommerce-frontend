@@ -16,4 +16,3 @@ export type Order = {
   paymentId: string;
   payerId: string;
 };
-//TODO decide whats needed

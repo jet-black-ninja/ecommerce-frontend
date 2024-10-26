@@ -5,25 +5,34 @@ import { useToast } from '@/hooks/use-toast';
 import { deleteCartItem, updateCartQuantity } from '@/store/shop/cart-slice';
 import { AppDispatch, RootState } from '@/store/store';
 import { Button } from '../ui/button';
-/*@ts-ignore*/
-function UserCartItemContent({ cartItem }) {
+import { CartItem } from '@/interfaces/Cart';
+import { Product } from '@/interfaces/Product';
+
+//TODO fix types
+function UserCartItemContent(cartItem: CartItem | any) {
   const { user } = useSelector((state: RootState) => state.auth);
-  const { cartItems } = useSelector((state: RootState) => state.shopCart);
+  const { cartItems = { items: [] } } = useSelector(
+    (state: RootState) => state.shopCart
+  );
   const { productList } = useSelector((state: RootState) => state.shopProduct);
   const dispatch = useDispatch<AppDispatch>();
   const { toast } = useToast();
-/*@ts-ignore*/
-  function handleUpdateQuantity(getCartItem, typeOfAction) {
-    if (typeOfAction === 'plus') {/*@ts-ignore*/
+
+  function handleUpdateQuantity(
+    getCartItem: CartItem,
+    typeOfAction: 'plus' | 'minus'
+  ) {
+    if (typeOfAction === 'plus') {
+      //@ts-ignore
       let getCartItems = cartItems.items || [];
 
       if (getCartItems.length) {
-        const indexOfCurrentCartItem = getCartItems.findIndex(/*@ts-ignore*/
-          (item) => item.productId === getCartItem?.productId
+        const indexOfCurrentCartItem = getCartItems.findIndex(
+          (item: CartItem) => item.productId === getCartItem?.productId
         );
-        const getCurrentProductIndex = productList.findIndex(/*@ts-ignore*/
-          (product) => product._id === getCartItem?.productId
-        );/*@ts-ignore*/
+        const getCurrentProductIndex = productList.findIndex(
+          (product: Product) => product._id === getCartItem?.productId
+        );
         const getTotalStock = productList[getCurrentProductIndex].totalStock;
 
         if (indexOfCurrentCartItem > -1) {
@@ -39,7 +48,7 @@ function UserCartItemContent({ cartItem }) {
       }
     }
     dispatch(
-      updateCartQuantity({/*@ts-ignore*/
+      updateCartQuantity({
         userId: user?.id,
         productId: getCartItem?.productId,
         quantity:
@@ -55,9 +64,9 @@ function UserCartItemContent({ cartItem }) {
       }
     });
   }
-/*@ts-ignore*/
-  function handleCartItemDelete(getCartItem) {
-    dispatch(/*@ts-ignore*/
+
+  function handleCartItemDelete(getCartItem: CartItem) {
+    dispatch(
       deleteCartItem({ userId: user?.id, productId: getCartItem?.productId })
     ).then((data) => {
       if (data?.payload?.success) {

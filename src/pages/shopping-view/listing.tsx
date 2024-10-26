@@ -193,7 +193,7 @@ function ListingPage() {
       </div>
       <ProductDetailsDialog
         open={openDetailsDialog}
-        setOpen={setOpenDetailsDialog}/* @ts-ignore */
+        setOpen={setOpenDetailsDialog} /* @ts-ignore */
         productDetails={productDetails}
       />
     </div>

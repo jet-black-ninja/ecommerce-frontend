@@ -13,11 +13,13 @@ import {
 } from '@/store/admin/order-slice';
 import { useToast } from '@/hooks/use-toast';
 import { AppDispatch, RootState } from '@/store/store';
+import { Order } from '@/interfaces/Order';
+
 const initialFormData = {
   status: '',
 };
-/*@ts-ignore*/
-function AdminOrderDetailsView({ orderDetails }) {
+
+function AdminOrderDetailsView(orderDetails: Order | any) {
   const [formData, setFormData] = useState(initialFormData);
   const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
@@ -30,7 +32,8 @@ function AdminOrderDetailsView({ orderDetails }) {
     event.preventDefault();
     const { status } = formData;
     // console.log(status);
-    dispatch(/*@ts-ignore*/
+    dispatch(
+      
       updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
     ).then((data) => {
       dispatch(getOrderDetailsForAdmin(orderDetails?._id));
@@ -55,7 +58,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>
-            <Label>{orderDetails.orderDate.split('T')[0]}</Label>
+            <Label>{orderDetails.orderDate.toISOString().split('T')[0]}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order price</p>
@@ -92,8 +95,7 @@ function AdminOrderDetailsView({ orderDetails }) {
             <div className="font-medium">Order Details</div>
             <ul className="grid gap-3">
               {orderDetails?.cartItems && orderDetails?.cartItems.length > 0
-                ? /*@ts-ignore*/
-                  orderDetails?.cartItems.map((item) => (
+                ? orderDetails?.cartItems.map((item: any) => (
                     <li className="flex items-center justify-between">
                       <span>Title: {item.title}</span>
                       <span>Quantity: {item.quantity}</span>
@@ -109,8 +111,7 @@ function AdminOrderDetailsView({ orderDetails }) {
           <div className="grid gap-2">
             <div className="font-medium">Shipping Info</div>
             <div className="grid gap-0.5 text-muted-foreground">
-              {/*@ts-ignore*/}
-              <span>{user.userName}</span>
+              <span>{user?.userName}</span>
               <span>{orderDetails?.addressInfo?.address}</span>
               <span>{orderDetails?.addressInfo?.city}</span>
               <span>{orderDetails?.addressInfo?.pincode}</span>

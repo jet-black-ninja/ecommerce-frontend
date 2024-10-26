@@ -114,7 +114,7 @@ function CheckoutPage() {
           {/*@ts-ignore*/}
           {cartItems && cartItems.items && cartItems.items.length > 0
             /*@ts-ignore*/
-            ? cartItems.items.map((item: CartItem) => (
+            ? cartItems.items.map((item: CartItem) => (//@ts-ignore
                 <UserCartItemContent cartItem={item} />
               ))
             : null}

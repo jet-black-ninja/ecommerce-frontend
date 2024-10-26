@@ -1,15 +1,22 @@
+import { Address } from '@/interfaces/Address';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter } from '../ui/card';
 import { Label } from '../ui/label';
 
+interface IAddressCard{
+  selectedId:any;
+  addressInfo:Address;
+  handleDeleteAddress:(address:Address) => void;
+  handleEditAddress:(address:Address) => void;
+  setCurrentSelectedAddress:(address:Address) => void;
+}
 function addressCard({
-  /*@ts-ignore*/
-  selectedId /*@ts-ignore*/,
-  addressInfo /*@ts-ignore*/,
-  handleDeleteAddress /*@ts-ignore*/,
-  handleEditAddress /*@ts-ignore*/,
-  setCurrentSelectedAddress /*@ts-ignore*/,
-}) {
+  selectedId ,
+  addressInfo ,
+  handleDeleteAddress ,
+  handleEditAddress ,
+  setCurrentSelectedAddress ,
+}:IAddressCard) {
   return (
     <Card
       onClick={() => setCurrentSelectedAddress(addressInfo)}

@@ -49,7 +49,7 @@ function AdminProducts() {
     useState<boolean>(false);
   const [formData, setFormData] = useState<FromDataProps>(initialFormData);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>('');
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const [imageLoadingState, setImageLoadingState] = useState<boolean>(false);
   const [currentEditedId, setCurrentEditedId] = useState<string | null>(null);
 
@@ -104,7 +104,7 @@ function AdminProducts() {
   }
   function isFormValid() {
     return Object.keys(formData)
-      .filter((currentKey) => currentKey !== 'averageReview')/*@ts-ignore*/
+      .filter((currentKey) => currentKey !== 'averageReview') //@ts-ignore
       .map((key) => formData[key] !== '')
       .every((item) => item);
   }
@@ -124,7 +124,7 @@ function AdminProducts() {
         <div className="grid gap-4 md:grid-cols-3 lg:grid-cold-4">
           {productList && productList.length > 0
             ? productList.map((productItem) => (
-                <AdminProductTile /*@ts-ignore*/
+                <AdminProductTile 
                   key={productItem._id}
                   setFormData={setFormData}
                   setOpenCreateProductDialog={setOpenCreateProductDialog}
@@ -152,7 +152,7 @@ function AdminProducts() {
             </SheetHeader>
             <ProductImageUpload
               imageFile={imageFile}
-              setImageFile={setImageFile} /*@ts-ignore*/
+              setImageFile={setImageFile}
               setUploadedImageUrl={setUploadedImageUrl}
               setImageLoadingState={setImageLoadingState}
               imageLoadingState={imageLoadingState}

@@ -7,7 +7,8 @@ type OrderStatus =
   | 'inProcess'
   | 'inShipping'
   | 'delivered'
-  | 'rejected';
+  | 'rejected'
+  | string;
 interface IState {
   orderList: Order[];
   orderDetails: Order | null;
