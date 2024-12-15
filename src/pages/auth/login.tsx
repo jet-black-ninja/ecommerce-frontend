@@ -19,8 +19,8 @@ interface LoginResponse {
   };
 }
 const initialData: FormData = {
-  email: '',
-  password: '',
+  email: 'test@mail.com',
+  password: '1234',
 };
 
 function AuthLogin() {
